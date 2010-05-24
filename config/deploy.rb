@@ -1,22 +1,24 @@
-set :application, "set your application name here"
-set :repository,  "set your repository location here"
+set :application, "ppe"
+set :user, "ubuntu"
+set :runner, "ubuntu"
+set :domain, "ppe.tinypla.net"
 
-set :scm, :subversion
+default_run_options[:pty] = true
+set :scm, :git
+set :repository,  "http://github.com/tokumine/pa-explore.git"
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
-role :web, "your web-server here"                          # Your HTTP server, Apache/etc
-role :app, "your app-server here"                          # This may be the same as your `Web` server
-role :db,  "your primary db-server here", :primary => true # This is where Rails migrations will run
-role :db,  "your slave db-server here"
+role :web, "stage.vizzuality.com"                          # Your HTTP server, Apache/etc
+role :app, "stage.vizzuality.com"                          # This may be the same as your `Web` server
+role :db,  "stage.vizzuality.com", :primary => true # This is where Rails migrations will run
 
-# If you are using Passenger mod_rails uncomment this:
-# if you're still using the script/reapear helper you will need
-# these http://github.com/rails/irs_process_scripts
+set :app_path, "/home/ubuntu/www/#{application}"
+set :deploy_to, app_path
 
-# namespace :deploy do
-#   task :start {}
-#   task :stop {}
-#   task :restart, :roles => :app, :except => { :no_release => true } do
-#     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-#   end
-# end
+namespace :deploy do
+  task :start do end
+  task :stop do end
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+  end
+end
