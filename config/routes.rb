@@ -1,8 +1,14 @@
 ActionController::Routing::Routes.draw do |map|
-  map.root :controller => "main", :action => "index"
+  map.resources :games
   
+  map.new_track '/new_track', :controller => "javi", :action => "new_track"
+  map.get_cells '/get_cells_by_tile', :controller => "javi", :action => "get_cells_by_tile"
+  
+  map.resources :cells
+  map.resources :classifications
+  map.resources :tracks
+  map.root :controller => "main", :action => "index"
   map.resources :user_sessions
-
   map.resources :users
   # config/routes.rb
   map.login "login", :controller => "user_sessions", :action => "new"
