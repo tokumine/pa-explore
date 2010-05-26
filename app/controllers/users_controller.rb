@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       flash[:notice] = "Successfully created user."
-      redirect_to root_url
+      redirect_to games_url
     else
       render :action => 'new'
     end
