@@ -1,8 +1,12 @@
 development:
-  domain: localhost:3000
-
+  cells_per_track: 20
+  meters_per_cell: 10
+  
 test:
-  domain: test.host
-
+  cells_per_track: 20
+  meters_per_cell: 10
+  
 production:
-  domain: example.com
+  cells_per_track: 20
+  meters_per_cell: 10
+  

@@ -9,7 +9,36 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100526115225) do
+ActiveRecord::Schema.define(:version => 20100526140859) do
+
+  create_table "cells", :force => true do |t|
+    t.integer  "positive_count", :default => 0
+    t.integer  "negative_count", :default => 0
+    t.integer  "x"
+    t.integer  "y"
+    t.integer  "z"
+    t.integer  "parent_x"
+    t.integer  "parent_y"
+    t.integer  "parent_z"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cells", ["parent_x", "parent_y", "parent_z"], :name => "index_cells_on_parent_x_and_parent_y_and_parent_z"
+  add_index "cells", ["x", "y", "z"], :name => "index_cells_on_x_and_y_and_z"
+
+  create_table "classifications", :force => true do |t|
+    t.integer  "x"
+    t.integer  "y"
+    t.integer  "z"
+    t.boolean  "value"
+    t.integer  "track_id"
+    t.integer  "cell_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "classifications", ["x", "y", "z"], :name => "index_classifications_on_x_and_y_and_z"
 
   create_table "geometry_columns", :id => false, :force => true do |t|
     t.string  "f_table_catalog",   :limit => 256, :null => false
@@ -29,6 +58,13 @@ ActiveRecord::Schema.define(:version => 20100526115225) do
     t.string  "proj4text", :limit => 2048
   end
 
+  create_table "tracks", :force => true do |t|
+    t.datetime "finished_at"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "username"
     t.string   "crypted_password",                   :null => false
@@ -44,6 +80,8 @@ ActiveRecord::Schema.define(:version => 20100526115225) do
     t.string   "current_login_ip"
     t.string   "last_login_ip"
     t.string   "email"
+    t.integer  "meters_explored",     :default => 0
+    t.integer  "rank"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

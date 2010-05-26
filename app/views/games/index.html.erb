@@ -1,0 +1,13 @@
+<% title "Games" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+  <% for game in @games %>
+    <tr>
+      <td><%=h game.name %></td>
+    </tr>
+  <% end %>
+</table>
+

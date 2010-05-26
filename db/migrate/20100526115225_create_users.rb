@@ -14,7 +14,9 @@ class CreateUsers < ActiveRecord::Migration
       t.datetime  :last_login_at                                     
       t.string    :current_login_ip                                  
       t.string    :last_login_ip                                     
-      t.string    :email      
+      t.string    :email
+      t.integer   :meters_explored, :default => 0
+      t.integer   :rank, :default => nil      
       t.timestamps
     end
   end
