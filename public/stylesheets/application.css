@@ -107,7 +107,7 @@ div.left_container {position:absolute; top:0; left:0; width:256px; margin:0; pad
 div#right_container {position:absolute; top:0; left:10000px; width:87%; margin:0; padding:0; z-index:800; height:100%; background-color:black; overflow:hidden; }
 
 /* ---------------LEFT CONTAINER----------------- */
-div#map {position:absolute; top:0; left:0; margin:0 0 0 0; width:100%; height:100%; overflow:hidden;}
+div#map_canvas {position:absolute; top:0; left:0; margin:0 0 0 0; width:100%; height:100%; overflow:hidden;}
 
 div.left_container p {font-family:Geneva;}
 div.left_container div.header {float:left; width:220px; height:95px; background-color:#000000;}

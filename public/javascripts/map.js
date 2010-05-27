@@ -211,8 +211,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 
 	function initialize() {
 	  var myLatlng = new google.maps.LatLng(-34.397, 150.644);
-
-
+		
    var mapOptions = {
      zoom: 15,
      center: new google.maps.LatLng(36.54088231109613, -5.533879986309818),
