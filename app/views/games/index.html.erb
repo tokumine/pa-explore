@@ -1,2 +1,252 @@
-<% title "Games" %>
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1.0, minimum-scale=1.0, user-scalable=1" />
+		<meta name = "format-detection" content = "telephone=no" />
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<title>Protected Areas Explorer</title>
+		<%= stylesheet_link_tag 'ipad' %>
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<%= javascript_include_tag 'InfoWindow' %>
+		<%= javascript_include_tag 'ipad' %>
+		
+		<!-- <script type="text/javascript">
+			var isiPad = navigator.userAgent.match(/iPad/i) != null;
+			if (isiPad) {
+				$('head').append('<link rel="stylesheet" href="stylesheets/layout.css" type="text/css" />');
+				$('head').append('<script type="text/javascript" src="javascripts/InfoWindow.js"></script>');
+				$('head').append('<script type="text/javascript" src="javascripts/ipad.js"></script>');
 
+			}
+			
+		</script> -->
+		
+		
+	</head>
+	<body style="margin:0px; padding:0px;" onload="initialize()">
+		
+		<div class="left_column">
+			<header>
+				<h1>PROTECTED AREA<br/><strong>EXPLORER</strong></h1>
+			</header>
+			<ul id="main_list">
+				<li class="first">
+					<div class="image">
+						<img src="../images/gravatar.jpg" alt="Barroso avatar" />
+					</div>
+					<div class="data">
+						<p>ra.barroso<sup>(28th)</sup></p>
+						<p class="number">0003127m <small class="red">[+1231m]</small></p>
+					</div>
+				</li>
+				<li>
+					<div class="image">
+						<img src="../images/gravatar.jpg" alt="Barroso avatar" />
+					</div>
+					<div class="data">
+						<p>ra.barroso<sup>(28th)</sup></p>
+						<p class="number">0003127m <small class="red">[+1231m]</small></p>
+					</div>
+				</li>
+				<li>
+					<div class="image">
+						<img src="../images/gravatar.jpg" alt="Barroso avatar" />
+					</div>
+					<div class="data">
+						<p>ra.barroso<sup>(28th)</sup></p>
+						<p class="number">0003127m <small class="red">[+1231m]</small></p>
+					</div>
+				</li>
+				<li class="you">
+					<div class="top">
+						<div class="image">
+							<img src="../images/gravatar_big.jpg" alt="Barroso avatar" />
+						</div>
+						<div class="data">
+							<p>ra.barroso<sup>(28th)</sup></p>
+							<p class="number">
+								<ul>
+									<li>0</li>
+									<li>0</li>
+									<li>0</li>
+									<li>0</li>
+									<li>1</li>
+									<li>2</li>
+									<li>3</li>
+									<li>4</li>
+								</ul>
+								<label>METERS <br />DONE</label>
+							</p>
+						</div>
+					</div>
+					<div class="bottom">
+						<a class="ranking" href="#"></a>
+						<a class="profile" href="javascript:popout();"></a>
+						<a class="gotomap" href="javascript:popin();"></a>
+					</div>
+				</li>
+				<li>
+					<div class="image">
+						<img src="../images/gravatar.jpg" alt="Barroso avatar" />
+					</div>
+					<div class="data">
+						<p>ra.barroso<sup>(28th)</sup></p>
+						<p class="number">0003127m <small class="green">[+1231m]</small></p>
+					</div>
+				</li>
+				<li>
+					<div class="image">
+						<img src="../images/gravatar.jpg" alt="Barroso avatar" />
+					</div>
+					<div class="data">
+						<p>ra.barroso<sup>(28th)</sup></p>
+						<p class="number">0003127m <small class="green">[+1231m]</small></p>
+					</div>
+				</li>
+				<li>
+					<div class="image">
+						<img src="../images/gravatar.jpg" alt="Barroso avatar" />
+					</div>
+					<div class="data">
+						<p>ra.barroso<sup>(28th)</sup></p>
+						<p class="number">0003127m <small class="green">[+1231m]</small></p>
+					</div>
+				</li>
+				<li>
+					<div class="image">
+						<img src="../images/gravatar.jpg" alt="Barroso avatar" />
+					</div>
+					<div class="data">
+						<p>ra.barroso<sup>(28th)</sup></p>
+						<p class="number">0003127m <small class="red">[+1231m]</small></p>
+					</div>
+				</li>
+				<li>
+					<div class="image">
+						<img src="../images/gravatar.jpg" alt="Barroso avatar" />
+					</div>
+					<div class="data">
+						<p>ra.barroso<sup>(28th)</sup></p>
+						<p class="number">0003127m <small class="red">[+1231m]</small></p>
+					</div>
+				</li>
+				<li>
+					<div class="image">
+						<img src="../images/gravatar.jpg" alt="Barroso avatar" />
+					</div>
+					<div class="data">
+						<p>ra.barroso<sup>(28th)</sup></p>
+						<p class="number">0003127m <small class="green">[+1231m]</small></p>
+					</div>
+				</li>
+				<li>
+					<div class="image">
+						<img src="../images/gravatar.jpg" alt="Barroso avatar" />
+					</div>
+					<div class="data">
+						<p>ra.barroso<sup>(28th)</sup></p>
+						<p class="number">0003127m <small class="green">[+1231m]</small></p>
+					</div>
+				</li>
+				<li>
+					<div class="image">
+						<img src="../images/gravatar.jpg" alt="Barroso avatar" />
+					</div>
+					<div class="data">
+						<p>ra.barroso<sup>(28th)</sup></p>
+						<p class="number">0003127m <small class="red">[+1231m]</small></p>
+					</div>
+				</li>
+				<li class="last">
+					<div class="image">
+						<img src="../images/gravatar.jpg" alt="Barroso avatar" />
+					</div>
+					<div class="data">
+						<p>ra.barroso<sup>(28th)</sup></p>
+						<p class="number">0003127m <small class="red">[+1231m]</small></p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="profile" id="slider">
+			<div class="header">
+				<ul>
+					<li class="selected">your feed</li>
+					<li>your badges</li>
+					<li>account settings</li>
+				</ul>
+			</div>
+			
+			<div class="feed_container">
+				<ul>
+					<li class="first">
+						<h3>You have found a new endangered species, <strong>4 mins ago</strong></h3>
+						<div class="image">
+							<img src="../images/panda.png" />
+						</div>
+						<div class="information">
+							<p class="kind">Giant Pandas</p>
+							<p class="learn">learn more at eol.org</p>
+						</div>
+					</li>
+					<li>
+						<h3 class="green">You have found a new endangered species, <strong>4 mins ago</strong></h3>
+						<div class="image">
+							<img src="../images/panda.png" />
+						</div>
+						<div class="information">
+							<p class="kind">Giant Pandas</p>
+							<p class="learn">learn more at eol.org</p>
+						</div>
+					</li>
+					<li>
+						<h3 class="green">You have found a new endangered species, <strong>4 mins ago</strong></h3>
+						<div class="image">
+							<img src="../images/panda.png" />
+						</div>
+						<div class="information">
+							<p class="kind">Giant Pandas</p>
+							<p class="learn">learn more at eol.org</p>
+						</div>
+					</li>
+					<li>
+						<h3>You have found a new endangered species, <strong>4 mins ago</strong></h3>
+						<div class="image">
+							<img src="../images/panda.png" />
+						</div>
+						<div class="information">
+							<p class="kind">Giant Pandas</p>
+							<p class="learn">learn more at eol.org</p>
+						</div>
+					</li>
+					<li>
+						<h3>You have found a new endangered species, <strong>4 mins ago</strong></h3>
+						<div class="image">
+							<img src="../images/panda.png" />
+						</div>
+						<div class="information">
+							<p class="kind">Giant Pandas</p>
+							<p class="learn">learn more at eol.org</p>
+						</div>
+					</li>
+					<li class="last">
+						<h3>You have found a new endangered species, <strong>4 mins ago</strong></h3>
+						<div class="image">
+							<img src="../images/panda.png" />
+						</div>
+						<div class="information">
+							<p class="kind">Giant Pandas</p>
+							<p class="learn">learn more at eol.org</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			
+			
+		</div>
+
+		<div id="map_canvas" style="width:100%; height:100%"></div>
+
+	</body>
+</html>
