@@ -13,7 +13,7 @@ class TracksController < ApplicationController
                 :z => 17
                 :surprise => surprise}
     end            
-    render  :json => json          
+    render  :json => json, :callback => params[:callback]
     
     #@track = Track.new(params[:track])
     #@track.user = current_user
