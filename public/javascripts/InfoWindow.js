@@ -105,7 +105,7 @@ InfoWindow.prototype.hide = function() {
 
 InfoWindow.prototype.show = function() {
   if (this.div_) {
-    this.div_.style.visibility = "visible";
+    this.div_.style.visibility = "visible";0
   }
 }
 

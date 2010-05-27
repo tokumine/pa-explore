@@ -3,19 +3,6 @@
 // 
 // 
 
-var map;
-
-function initialize() {
-    var myLatlng = new google.maps.LatLng(28.299544,-16.627808);
-    var myOptions = {
-      zoom: 8,
-      center: myLatlng,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    var map = new google.maps.Map(document.getElementById("map"), myOptions);
-}
-
-
 $(document).ready(function() {
 		
 		$('div.profile ul.options li a.menu').click(function(ev){
@@ -25,12 +12,32 @@ $(document).ready(function() {
 			removeAllActive();
 						
 			$(this).parent().addClass('active');
-			
+						
+			if ($(this).attr("id") == 'your_feed') {
+				$('div.information div.feed').show();
+				$('div.information div.badges').hide();
+				$('div.information div.account_settings').hide();				
+			} else if ($(this).attr("id") == 'your_badges') {
+				$('div.information div.feed').hide();
+				$('div.information div.badges').show();
+				$('div.information div.account_settings').hide();	
+			}else if ($(this).attr("id") == 'account_settings') {
+				$('div.information div.feed').hide();
+				$('div.information div.badges').hide();
+				$('div.information div.account_settings').show();
+			}
 		});
+		
+		
 		
 		$('div.buttons a#showRanking').click(function(ev){
 			ev.stopPropagation();
 			ev.preventDefault();
+			
+			var widthRightContainer = $('div#right_container').width();
+
+			$('div#right_container').css('left',-widthRightContainer);
+			$('div#right_container').show();
 			
 			$('div.rank ul li.user a.go_back').show();
 			
@@ -39,20 +46,11 @@ $(document).ready(function() {
 						{ duration: 300,
 					    specialEasing: 'easeOutElastic'
 					}).animate(
-								{ left: 218 }, 
+								{ left: 220 }, 
 								{ duration: 200,
 							    specialEasing: 'easeOutBounce',
 									complete: function() {
-										
-										//$('div.left_column ul li').css('background','url(../images/li_bkg_profile.png) repeat-y 0 0');
-										//$('div.rank ul li').css('background','url(../images/li_bkg_profile.png) repeat-y 0 0');
-										
-										// $('div.rank ul li').each(function(index){
-										// 	if ((!$(this).hasClass('user'))&&(!$(this).hasClass('message'))) {
-										// 		$(this).addClass('shadow');				
-										// 	}
-										// });
-										
+										$('div.rank ul li.other_user').css('background','url(../images/li_bkg_profile.png) repeat-y 0 0');										
 									}
 								});			
 		});
@@ -61,6 +59,8 @@ $(document).ready(function() {
 			ev.stopPropagation();
 			ev.preventDefault();
 			
+			var widthRightContainer = $('div#right_container').width();
+			
 			$('div.rank ul li.user a.go_back').fadeOut();
 			
 			$("#right_container").animate(
@@ -68,15 +68,18 @@ $(document).ready(function() {
 							{ duration: 300,
 						    specialEasing: 'easeOutElastic'
 						}).animate(
-									{ left: -2000 }, 
+									{ left: -widthRightContainer }, 
 									{ duration: 200,
 								    specialEasing: 'easeOutBounce',
 										complete: function() {
 
 										}
 									});
-					
+			
+				$('div#right_container').fadeOut();
+				$('div.rank ul li.other_user').css('background','none');										
 			});
+			
 		
 		
   });

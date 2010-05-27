@@ -1,6 +1,37 @@
 class Track < ActiveRecord::Base
   belongs_to :user
-  has_many :classifications
+  has_many :classifications, :order => "position"
   has_many :cells, :through => :classifications
   attr_accessible :started_at, :finished_at, :user
+  after_create :generate_track
+  
+  def generate_track (x=nil, y=nil)    
+    @total_cells = (2**17)**2    
+    @axis_min = 0
+    @axis_max = 32#2**17
+        
+    #1 Choose a random starting point    
+    x ||= rand(@axis_max)
+    y ||= rand(@axis_max)
+    z = 17
+    
+    APP_CONFIG[:cells_per_track].times do |i|      
+      cell = Cell.find_or_create_by_x_and_y_and_z(x,y,z)      
+      classifications.create(:cell => cell, :x => cell.x, :y => cell.y, :z => cell.z)
+      y += 1    
+    end          
+  end
+  
+  def game_json    
+    json = []      
+    classifications.each do |c|
+      surprise = rand < 0.5 ? "true" : "false"
+      json << { :id => c.id,
+                :x => c.x,
+                :y => c.y,
+                :z => c.z,
+                :surprise => surprise}
+    end
+    json
+  end
 end

@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(:version => 20100526140859) do
     t.integer  "y"
     t.integer  "z"
     t.boolean  "value"
+    t.integer  "position"
     t.integer  "track_id"
     t.integer  "cell_id"
     t.datetime "created_at"
