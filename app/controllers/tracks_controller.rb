@@ -15,7 +15,7 @@ class TracksController < ApplicationController
       json << { :id => i,
                 :x => x,
                 :y => y+i,
-                :z => 17
+                :z => 17,
                 :surprise => surprise}
     end            
     render  :json => json, :callback => params[:callback]
