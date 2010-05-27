@@ -26,7 +26,7 @@
 				</div>
 				<div class="rank">
 					<ul>
-						<li>
+						<li class="other_user">
 							<div class="image">
 								<%= image_tag("gravatar.jpg", :alt => "Barroso avatar") %>
 							</div>
@@ -42,7 +42,7 @@
 								</div>
 							</div>
 						</li>
-						<li>
+						<li class="other_user">
 							<div class="image">
 								<%= image_tag("gravatar.jpg", :alt => "Barroso avatar") %>
 							</div>
@@ -57,7 +57,7 @@
 								</div>
 							</div>
 						</li>
-						<li>
+						<li class="other_user">
 							<div class="image">
 								<%= image_tag("gravatar.jpg", :alt => "Barroso avatar") %>
 							</div>
@@ -72,8 +72,24 @@
 								</div>
 							</div>
 						</li>
+						<li class="other_user">
+							<div class="image">
+								<%= image_tag("gravatar.jpg", :alt => "Barroso avatar") %>
+							</div>
+							<div class="data">
+								<div class="user">
+									<p class="username">jmedina</p>
+									<p class="rank">(1th)</p>
+								</div>
+								<div class="distance">
+									<p class="amount">0003127m</p>
+									<p class="difference positive">(+1231m)</p>
+								</div>
+							</div>
+						</li>
+						
 						<li class="user">
-							<div class="data">
+							<div class="data shadow">
 								<div class="image">
 									<%= image_tag("gravatar_big.jpg", :alt => "Barroso avatar") %>
 								</div>
@@ -95,12 +111,12 @@
 								</div>
 							</div>
 							<div class="buttons">
-								<a class="view_ranking" href="#"></a>
+								<a class="view_ranking"></a>
 								<a class="user_profile" id="showRanking"></a>
-								<a class="go_back" href="#"></a>
+								<a class="go_back"></a>
 							</div>
 						</li>
-						<li>
+						<li class="other_user">
 							<div class="image">
 								<%= image_tag("gravatar.jpg", :alt => "Barroso avatar") %>
 							</div>
@@ -115,7 +131,7 @@
 								</div>
 							</div>
 						</li>
-						<li>
+						<li class="other_user">
 							<div class="image">
 								<%= image_tag("gravatar.jpg", :alt => "Barroso avatar") %>
 							</div>
@@ -130,7 +146,7 @@
 								</div>
 							</div>
 						</li>
-						<li>
+						<li class="other_user">
 							<div class="image">
 								<%= image_tag("gravatar.jpg", :alt => "Barroso avatar") %>
 							</div>
@@ -146,7 +162,7 @@
 							</div>
 						</li>
 						
-						<li class="last">
+						<li class="last other_user">
 							<div class="image">
 								<%= image_tag("gravatar.jpg", :alt => "Barroso avatar") %>
 							</div>
@@ -169,9 +185,9 @@
 					<div class="profile">
 						
 							<ul class="options">
-								<li class="active"><a class="menu" href="#your_feed">your feed</a></li>
-								<li><a class="menu" href="#your_badges">your badges</a></li>
-								<li><a class="menu" href="#account_settings">account settings</a></li>
+								<li class="active"><a class="menu" href="#your_feed" id="your_feed">your feed</a></li>
+								<li><a class="menu" href="#your_badges" id="your_badges">your badges</a></li>
+								<li><a class="menu" href="#account_settings" id="account_settings">account settings</a></li>
 							</ul>
 							<div class="information">								
 								<div class="feed">
