@@ -116,8 +116,7 @@ div.left_container div.header p.protected_area {font-size:13px; line-height:13px
 div.left_container div.header p.explorer {font-size:35px; line-height:35px; margin:0px 0 0 17px;}
 div.left_container div.rank {float:left; width:220px; height:100%; background-color:#232323;}
 div.left_container div.rank ul {width:256px; height:100%;}
-div.left_container div.rank ul li {float:left; height:85px; width:220px; margin:0; border-top:1px solid #333333; border-bottom:1px solid #111111; 
-	background:(../images/li_bkg_profile.png) repeat-y 0 0;}
+div.left_container div.rank ul li {float:left; height:85px; width:220px; margin:0; border-top:1px solid #333333; border-bottom:1px solid #111111; }
 
 div.left_container div.rank ul li.shadow {	
 	box-shadow: inset 1px 1px 10px #111111;
@@ -144,8 +143,8 @@ div.left_container div.rank ul li.user {float:left; width:100%; height:135px; bo
 	
 div.left_container div.rank ul li.user div.data {float:left; width:100%; height:72px; margin:0; border-bottom:1px solid #CACACA; padding:0 0 10px 0;}
 
-div.left_container div.rank ul li.user div.data a.avatar { border:solid 2px #FFFFFF; -moz-box-shadow: none; -webkit-box-shadow:none; box-shadow:none; width:44px; height:44px; 
-	background:url(../images/gravatar_big.jpg) no-repeat 0 0;}
+div.left_container div.rank ul li.user div.data div.image {float:left; width:44px; height:44px; border:2px solid #FFFFFF; -moz-box-shadow:none; -webkit-box-shadow:none; box-shadow:none; margin:20px 5px 0 15px;}
+div.left_container div.rank ul li.user div.data div.image img {width:44px; height:44px;}
 		
 div.left_container div.rank ul li.user div.data div.user {margin:20px 0 0 6px; width:150px;}
 div.left_container div.rank ul li.user div.data div.user p.username {color:#333333; font:bold 15px Junction; text-shadow:none; }
@@ -185,6 +184,12 @@ div.left_container div.rank ul li.user a.go_back:hover {background-position:0 -5
 
 
 div.left_container div.rank ul li.last {border-bottom:none;}
+
+
+div.left_container div.rank ul li div.image {float:left; width:38px; height:38px; border:2px solid #B6B6B6; margin:20px 5px 0 15px; -webkit-box-shadow: 0 -2px 3px #000; -moz-box-shadow: 0 -2px 3px #000; box-shadow:0 -2px 3px #000;}
+div.left_container div.rank ul li div.image img {width:38px; height:38px;}
+
+
 div.left_container div.rank ul li a.avatar {float:left; width:38px; height:38px; border:solid 2px #B6B6B6; background:url(../images/gravatar.jpg) no-repeat 0 0; margin:20px 0 0 17px; 
 	-moz-box-shadow: 0 -1px 0 black; -webkit-box-shadow:0 -1px 0 black; box-shadow:0 -1px 0 black; }
 	
