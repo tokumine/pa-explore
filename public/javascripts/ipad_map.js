@@ -174,29 +174,49 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
    console.log(tileCoordStr) 
  }
 
- function getTileIdforCell(cell) {
+ function getCellLatLngCenter(z,x,y) {
+     //calculate the bounds of the cell
+     var bounds = getTileBounds(z,x,y);
+         
+    return bounds.getCenter();
+ }
+ 
+ //getTileBounds(17,63517,51217)
+ function getTileBounds(z,x,y) {
+    
+    var foo = pixelsToMeters(x*256,y*256,z);
+ 	var maxx =foo.x;
+ 	var miny =foo.y;
 
+    foo = pixelsToMeters((x+1)*256,(y+1)*256,z);
+ 	var minx =foo.x;
+ 	var maxy =foo.y;
+ 	
+    var sw = metersToLatLon(miny,minx);
+    var ne = metersToLatLon(maxy,maxx);
+ 	
+ 	var latLngBounds = new google.maps.LatLngBounds(sw,ne);
+ 	
+    return latLngBounds;	
  }
 
-
- function random_color(format)
- {
-  var rint = Math.round(0xffffff * Math.random());
-  switch(format)
-  {
-   case 'hex':
-    return ('#0' + rint.toString(16)).replace(/^#0([0-9a-f]{6})$/i, '#$1');
-   break;
-
-   case 'rgb':
-    return 'rgb(' + (rint >> 16) + ',' + (rint >> 8 & 255) + ',' + (rint & 255) + ')';
-   break;
-
-   default:
-    return rint;
-   break;
-  }
+ function pixelsToMeters(x,y,z) {
+     var originShift = 2 * Math.PI * 6378137 / 2.0;
+     var res = (2 * Math.PI * 6378137) / (256 * Math.pow(2,z));
+ 	 var mx = x * res - originShift;
+ 	 var my = -(y * res - originShift);   
+     return {x:mx,y:my};
  }
+ 
+ function metersToLatLon(x, y) {
+     
+	lon = (x / (2 * Math.PI * 6378137 / 2.0)) * 180.0;
+	lat = (y / (2 * Math.PI * 6378137 / 2.0)) * 180.0;
+
+	lat = 180 / Math.PI * (2 * Math.atan( Math.exp( lat * Math.PI / 180.0)) - Math.PI / 2.0);
+	return new google.maps.LatLng(lat,lon);  
+ }
+
 
 
 	
