@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
   end
   
   def iphone_request?
-    (agent = request.env["HTTP_USER_AGENT"]) && agent[/(iPhone;.+Mobile\/)/]
+    (agent = request.env["HTTP_USER_AGENT"]) && agent[/(iPhone;)/]
   end
 
   def ipad_request?
