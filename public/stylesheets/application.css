@@ -210,7 +210,7 @@ div.left_container div.rank ul li div.data div.user p.rank {float:left; font:nor
 div.left_container div.rank ul li div.data div.distance {float:left; width:145px;}
 div.left_container div.rank ul li div.data div.distance p.amount {float:left; font:normal 13px Dinot-Medium; color:#FFFFFF; margin:3px 0 0 0; letter-spacing:1.0px;
 	text-shadow: black 0px -2px 0;}
-div.left_container div.rank ul li div.data div.distance p.difference {float:left; font:normal 10px Arial; width:60px; margin:3px 0 0 3px;
+div.left_container div.rank ul li div.data div.distance p.difference {float:left; font:normal 11px Dinot-Medium; width:60px; margin:6px 0 0 3px; line-height:12px;
 	text-shadow: black 0px -1px 0;}
 div.left_container div.rank ul li div.data div.distance .positive {color:#AF2D2D;}
 div.left_container div.rank ul li div.data div.distance .negative {color:#3B7020;}
