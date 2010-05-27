@@ -212,7 +212,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 
 
 	function initialize() {
-	  var myLatlng = new google.maps.LatLng(-34.397, 150.644);
+	  var myLatlng = new google.maps.LatLng(84.95544230153216, 160.499267578125);
 
    var mapOptions = {
      zoom: 15,
@@ -246,10 +246,82 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 			 trackData = result;
 	     hideLoading();
 			 setTimeout('map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)))',1000);
+			setTimeout('map.overlayMapTypes.insertAt(0, new FillMap(new google.maps.Size(256, 256)))',1000);
 	   }
 	 });
-
-
 	}
 	
 	
+	
+	
+	
+	function FillMap(tileSize) {
+	   this.tileSize = tileSize;
+	 }
+
+	 FillMap.prototype.getTile = function(coord, zoom, ownerDocument) {
+		var canvas = document.createElement("canvas");
+	   if (typeof G_vmlCanvasManager != 'undefined') 
+	     G_vmlCanvasManager.initElement(canvas);
+
+	   var id = 'id-' + coord.x + '-' + coord.y + '-' + zoom;
+
+	   canvas.id = id;
+	   canvas.width = canvas.height = 256;
+	   canvas.style.width = '256px';
+	   canvas.style.height = '256px';	
+	   canvas.style.left = '0px';
+	   canvas.style.top =  '0px';
+	   canvas.style.position = "relative";	
+	
+
+		$.ajax({
+		   type: "GET",
+		   url: "tiles/"+coord.x+"/"+coord.y+'/15',
+		   success: function(result){	
+					console.log(result);
+	 			  var rect = canvas.getContext("2d");
+
+					var r = Math.floor(Math.random()*256);
+					var g = Math.floor(Math.random()*256);
+					var b = Math.floor(Math.random()*256);
+
+
+	
+			   rect.strokeStyle = getHex(r,g,b);
+			   rect.lineWidth   = 2;
+			   rect.beginPath();
+
+	
+	
+	 
+	 			  var cells = 16;
+	 
+	 			  var cellsSize = 256/cells;
+	 			 	for (var i = 0; i < cells; i++) {
+	 					for (var j = 0; j<cells; j++) {
+							 rect.moveTo((cellsSize*i)+5,(cellsSize*j));
+					     rect.lineTo((cellsSize*i),(cellsSize*j)+5);
+	 						//rect.fillRect  (cellsSize*i, cellsSize*j, cellsSize*(i+1),cellsSize*(j+1));
+	 					}
+	 			  }        
+	 			  rect.stroke();    
+		   }
+		 });
+		return canvas;
+	   
+	 };
+	
+	
+	// intToHex()
+	 function intToHex(n){
+	 	n = n.toString(16);
+	 	// eg: #0099ff. without this check, it would output #099ff
+	 	if( n.length < 2)
+	 		n = "0"+n;
+	 	return n;
+	 }
+	
+	function getHex(r, g, b){
+	 	return '#'+intToHex(r)+intToHex(g)+intToHex(b);
+	 }
