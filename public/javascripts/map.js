@@ -2,6 +2,18 @@ var map;
 var projection;
 var MERCATOR_RANGE = 256;
 var infowindow;
+var trackData = [
+    {x:63517,y:51217,z:17,surprise:false},
+    {x:63517,y:51218,z:17,surprise:false},
+    {x:63517,y:51219,z:17,surprise:false},
+    {x:63517,y:51220,z:17,surprise:false},
+    {x:63518,y:51220,z:17,surprise:false},
+    {x:63519,y:51220,z:17,surprise:false},
+    {x:63520,y:51220,z:17,surprise:false}
+];
+
+
+
 
  function bound(value, opt_min, opt_max) {
    if (opt_min != null) value = Math.max(value, opt_min);
