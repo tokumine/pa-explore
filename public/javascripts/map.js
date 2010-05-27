@@ -2,15 +2,16 @@ var map;
 var projection;
 var MERCATOR_RANGE = 256;
 var infowindow;
-var trackData = [
-    {x:63517,y:51217,z:17,surprise:false},
-    {x:63517,y:51218,z:17,surprise:false},
-    {x:63517,y:51219,z:17,surprise:false},
-    {x:63517,y:51220,z:17,surprise:false},
-    {x:63518,y:51220,z:17,surprise:false},
-    {x:63519,y:51220,z:17,surprise:false},
-    {x:63520,y:51220,z:17,surprise:false}
-];
+var trackData = [];
+// [
+//     {x:63517,y:51217,z:17,surprise:false; id:1000},
+//     {x:63517,y:51218,z:17,surprise:false; id:2000},
+//     {x:63517,y:51219,z:17,surprise:false; id:3000},
+//     {x:63517,y:51220,z:17,surprise:false; id:4000},
+//     {x:63518,y:51220,z:17,surprise:false; id:5000},
+//     {x:63519,y:51220,z:17,surprise:false; id:6000},
+//     {x:63520,y:51220,z:17,surprise:false; id:7000}
+// ];
 
 
 
@@ -36,6 +37,7 @@ function MercatorProjection() {
   this.pixelsPerLonDegree_ = MERCATOR_RANGE / 360;
   this.pixelsPerLonRadian_ = MERCATOR_RANGE / (2 * Math.PI);
 };
+
 MercatorProjection.prototype.fromLatLngToPoint = function(latLng, opt_point) {
   var me = this;
 
@@ -113,9 +115,9 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
    }        
    ctx.stroke();    
 
-   // ctx.fillStyle    = '#d6d6d6';
-   //    ctx.font         = 'bold 10px sans-serif'
-   //    ctx.fillText(zoom + ' / '+coord.x+ ' / '+coord.y, 10, 10);
+    ctx.fillStyle    = '#d6d6d6';
+    ctx.font         = 'bold 10px sans-serif'
+   	ctx.fillText(zoom + ' / '+coord.x+ ' / '+coord.y, 10, 10);
 
 
    cross.strokeStyle = "#FFF";
@@ -212,10 +214,9 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 	function initialize() {
 	  var myLatlng = new google.maps.LatLng(-34.397, 150.644);
 
-
    var mapOptions = {
      zoom: 15,
-     center: new google.maps.LatLng(36.54088231109613, -5.533879986309818),
+     center: myLatlng,
      mapTypeId: google.maps.MapTypeId.SATELLITE,
      mapTypeControl: false,
      navigationControl: false,
@@ -224,7 +225,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
    map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
    projection = new MercatorProjection();
 
-	 infowindow = new InfoWindow( new google.maps.LatLng(36.54088231109613, -5.533879986309818), map);
+	 // infowindow = new InfoWindow( new google.maps.LatLng(36.54088231109613, -5.533879986309818), map);
 
 
    google.maps.event.addListener(map, "zoom_changed", function() {
@@ -235,8 +236,20 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
    google.maps.event.addListener(map, "click", function(event) {
        getTileByLatLng(event.latLng);
        getCellByLatLng(event.latLng);
-   });    
+   });
+
+	$.ajax({
+	   type: "POST",
+	   url: "tracks",
+	   success: function(result){
+			 console.log(result);
+			 trackData = result;
+	     hideLoading();
+			 setTimeout('map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)))',1000);
+	   }
+	 });
 
 
-   map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)));
 	}
+	
+	

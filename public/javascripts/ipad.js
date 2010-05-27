@@ -2,7 +2,9 @@ var isMoving = false;
 
 $(document).ready(function() {
 
-		var isiPad = navigator.userAgent.match(/iPad/i) != null;
+		// var isiPad = navigator.userAgent.match(/iPad/i) != null;
+		calculateCentre('div#loader','div#mamufas',218);
+		$('#loader').fadeIn('slow');
 
 		if (window.orientation == 90 || window.orientation==-90) {
 			changeSizeByOrientation(true);
@@ -133,6 +135,23 @@ $(document).ready(function() {
 		}
 	}
 	
+	
+	function calculateCentre(element,parent,offset_left) {
+		var width_element = $(element).width()/2; 
+		var height_element = $(element).height()/2;
+		
+		var left_position = ($(parent).width()/2) - width_element;
+		var top_position = ($(parent).height()/2) - height_element;
+		
+		$(element).css('left',left_position + offset_left +'px');
+		$(element).css('top',top_position+'px');
+	}
+	
+	function hideLoading(){	
+		$('#loader').fadeOut('slow',function(ev){
+			$('#mamufas').fadeOut('fast');
+		});
+	}
 	
 	
  
