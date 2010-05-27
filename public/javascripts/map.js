@@ -235,7 +235,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 	  var myLatlng = new google.maps.LatLng(84.95544230153216, 160.499267578125);
 
    var mapOptions = {
-     zoom: 3,
+     zoom: 15,
      center: myLatlng,
      mapTypeId: google.maps.MapTypeId.SATELLITE,
      mapTypeControl: false,
@@ -245,7 +245,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
    map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
    projection = new MercatorProjection();
 
-	 // infowindow = new InfoWindow( new google.maps.LatLng(36.54088231109613, -5.533879986309818), map);
+	 //infowindow = new InfoWindow( new google.maps.LatLng(36.54088231109613, -5.533879986309818), map);
 
 
    google.maps.event.addListener(map, "zoom_changed", function() {
@@ -264,8 +264,9 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 	   success: function(result){
 			 console.log(result);
 			 trackData = result;
+				
 			 map.setCenter(getCellLatLngCenter(trackData[0].z,trackData[0].x,trackData[0].y));
-	     // hideLoading();
+	     hideLoading();
 			 setTimeout('map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)))',1000);
 			setTimeout('map.overlayMapTypes.insertAt(0, new FillMap(new google.maps.Size(256, 256)))',1000);
 	   }
@@ -307,17 +308,43 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 					var g = Math.floor(Math.random()*256);
 					var b = Math.floor(Math.random()*256);
 
-			   rect.strokeStyle = getHex(r,g,b);
+			   // rect.strokeStyle = getHex(r,g,b);
+				 rect.strokeStyle='#000000';
 			   rect.lineWidth   = 2;
 			   rect.beginPath();
 
 	 			  var cells = 16;
 	 
-	 			  var cellsSize = 256/cells;
-	 			 	for (var i = 0; i < cells; i++) {
-	 					for (var j = 0; j<cells; j++) {
-							 rect.moveTo((cellsSize*i)+5,(cellsSize*j));
-					     rect.lineTo((cellsSize*i),(cellsSize*j)+5);
+	 			  var cellsSize = 64;
+	 			 	for (var i = 0; i < 4; i++) {
+	 					for (var j = 0; j<4; j++) {
+							if (i!=3 && j!=3 && j!=1) {
+							 rect.moveTo((cellsSize*i),(cellsSize*j)+10);
+					     rect.lineTo((cellsSize*i)+10,(cellsSize*j));
+							 rect.moveTo((cellsSize*i),(cellsSize*j)+20);
+					     rect.lineTo((cellsSize*i)+20,(cellsSize*j));
+							 rect.moveTo((cellsSize*i),(cellsSize*j)+30);
+					     rect.lineTo((cellsSize*i)+30,(cellsSize*j));
+							 rect.moveTo((cellsSize*i),(cellsSize*j)+40);
+					     rect.lineTo((cellsSize*i)+40,(cellsSize*j));
+							 rect.moveTo((cellsSize*i),(cellsSize*j)+50);
+					     rect.lineTo((cellsSize*i)+50,(cellsSize*j));
+							 rect.moveTo((cellsSize*i),(cellsSize*j)+60);
+					     rect.lineTo((cellsSize*i)+60,(cellsSize*j));
+
+							 rect.moveTo((cellsSize*(i+1)),(cellsSize*(j+1))-10);
+					     rect.lineTo((cellsSize*(i+1))-10,(cellsSize*(j+1)));
+							 rect.moveTo((cellsSize*(i+1)),(cellsSize*(j+1))-20);
+					     rect.lineTo((cellsSize*(i+1))-20,(cellsSize*(j+1)));
+							 rect.moveTo((cellsSize*(i+1)),(cellsSize*(j+1))-30);
+					     rect.lineTo((cellsSize*(i+1))-30,(cellsSize*(j+1)));
+							 rect.moveTo((cellsSize*(i+1)),(cellsSize*(j+1))-40);
+					     rect.lineTo((cellsSize*(i+1))-40,(cellsSize*(j+1)));
+							 rect.moveTo((cellsSize*(i+1)),(cellsSize*(j+1))-50);
+					     rect.lineTo((cellsSize*(i+1))-50,(cellsSize*(j+1)));
+							 rect.moveTo((cellsSize*(i+1)),(cellsSize*(j+1))-60);
+					     rect.lineTo((cellsSize*(i+1))-60,(cellsSize*(j+1)));
+					}
 	 						//rect.fillRect  (cellsSize*i, cellsSize*j, cellsSize*(i+1),cellsSize*(j+1));
 	 					}
 	 			  }        

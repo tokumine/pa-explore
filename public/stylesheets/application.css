@@ -115,7 +115,7 @@ div.left_column ul li {float:left; background:#232323; margin:0; border-top: 1px
 div.left_container {position:absolute; top:0; left:0; width:256px; margin:0; padding:0; z-index:10000; height:100%; overflow:hidden;}
 
 @font-face {font-family:Junction; src:url('../fonts/Junction.otf');}
-@font-face {font-family:DINOT-Medium; src:url('../fonts/DINOT-Medium.otf');}
+@font-face {font-family:DINOT-Medium; src:url('..fonts/DINOT-Medium.otf');}
 
 div#right_container {position:absolute; top:0; left:0px; width:87%; margin:0; padding:0; z-index:800; height:100%; background-color:black; overflow:hidden; display:none;}
 
@@ -177,7 +177,7 @@ div.left_container div.rank ul li.user div.data div.distance ul.amount li {width
 	);
 }
 
-div.left_container div.rank ul li.user div.data div.distance ul.amount li p {text-shadow: black 0px -1px 0; font:normal 14px Dinot-Medium; line-height:18px;}
+div.left_container div.rank ul li.user div.data div.distance ul.amount li p {text-shadow: black 0px -1px 0; font:normal 14px DINOT-Medium; line-height:18px;}
 div.left_container div.rank ul li.user div.data div.distance ul.amount li.message {background:none; float:left; font:normal 10px Geneva; text-transform:uppercase; color:#A7A7A7; width:44px; line-height:10px; margin:0; text-align:left; border:none; margin-left:4px;}
 div.left_container div.rank ul li.user div.buttons {float:left; border-top:1px solid #F0F0F0; height:52px; position:relative;}
 
