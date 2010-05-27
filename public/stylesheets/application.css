@@ -195,22 +195,18 @@ div.left_container div.rank ul li.last {border-bottom:none;}
 
 div.left_container div.rank ul li div.image {float:left; width:38px; height:38px; border:2px solid #B6B6B6; margin:20px 5px 0 15px; -webkit-box-shadow: 0 -2px 3px #000; -moz-box-shadow: 0 -2px 3px #000; box-shadow:0 -2px 3px #000;}
 div.left_container div.rank ul li div.image img {width:38px; height:38px;}
-
-
-div.left_container div.rank ul li a.avatar {float:left; width:38px; height:38px; border:solid 2px #B6B6B6; background:url(../images/gravatar.jpg) no-repeat 0 0; margin:20px 0 0 17px; 
-	-moz-box-shadow: 0 -1px 0 black; -webkit-box-shadow:0 -1px 0 black; box-shadow:0 -1px 0 black; }
 	
 div.left_container div.rank ul li div.data {float:left; margin:20px 0 0 10px; width:145px;}
 
 div.left_container div.rank ul li div.data div.user {float:left; width:145px;}
-div.left_container div.rank ul li div.data div.user p.username {float:left; font:normal 15px Junction; color:#FFFFFF; margin:4px 0 0 0;
+div.left_container div.rank ul li div.data div.user p.username {float:left; font:normal 15px Junction; color:#B3B3B3; margin:4px 0 0 0;
 	textz-shadow: black 0px -2px 0;}
-div.left_container div.rank ul li div.data div.user p.rank {float:left; font:normal 11px Junction; color:#FFFFFF; margin:0 0 0 3px;} 
+div.left_container div.rank ul li div.data div.user p.rank {float:left; font:normal 11px Junction; color:#B3B3B3; margin:0 0 0 3px;} 
 
 div.left_container div.rank ul li div.data div.distance {float:left; width:145px;}
-div.left_container div.rank ul li div.data div.distance p.amount {float:left; font:normal 13px Dinot-Medium; color:#FFFFFF; margin:3px 0 0 0; letter-spacing:1.0px;
+div.left_container div.rank ul li div.data div.distance p.amount {float:left; font:normal 13px DINOT-Medium; color:#B3B3B3; margin:3px 0 0 0; letter-spacing:1.0px;
 	text-shadow: black 0px -2px 0;}
-div.left_container div.rank ul li div.data div.distance p.difference {float:left; font:normal 11px Dinot-Medium; width:60px; margin:6px 0 0 3px; line-height:12px;
+div.left_container div.rank ul li div.data div.distance p.difference {float:left; font:normal 11px DINOT-Medium; width:60px; margin:6px 0 0 3px; line-height:12px;
 	text-shadow: black 0px -1px 0;}
 div.left_container div.rank ul li div.data div.distance .positive {color:#AF2D2D;}
 div.left_container div.rank ul li div.data div.distance .negative {color:#3B7020;}
