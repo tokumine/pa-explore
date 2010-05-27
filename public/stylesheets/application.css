@@ -144,7 +144,8 @@ div.left_container div.rank ul li.user {float:left; width:100%; height:135px; bo
 	
 div.left_container div.rank ul li.user div.data {float:left; width:100%; height:72px; margin:0; border-bottom:1px solid #CACACA; padding:0 0 10px 0;}
 
-div.left_container div.rank ul li.user div.data a.avatar { border:solid 2px #FFFFFF; -moz-box-shadow: none; -webkit-box-shadow:none; box-shadow:none; }
+div.left_container div.rank ul li.user div.data a.avatar { border:solid 2px #FFFFFF; -moz-box-shadow: none; -webkit-box-shadow:none; box-shadow:none; width:44px; height:44px; 
+	background:url(../images/gravatar_big.jpg) no-repeat 0 0;}
 		
 div.left_container div.rank ul li.user div.data div.user {margin:20px 0 0 6px; width:150px;}
 div.left_container div.rank ul li.user div.data div.user p.username {color:#333333; font:bold 15px Junction; text-shadow:none; }
