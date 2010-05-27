@@ -12,6 +12,10 @@ a {
   color: #0000FF;
 }
 
+a:hover {
+	cursor:pointer;
+}
+
 .clear {
   clear: both;
   height: 0;
