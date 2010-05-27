@@ -8,7 +8,7 @@ class Track < ActiveRecord::Base
   def generate_track (x=nil, y=nil)    
     @total_cells = (2**17)**2    
     @axis_min = 0
-    @axis_max = 2**17
+    @axis_max = 32#2**17
         
     #1 Choose a random starting point    
     x ||= rand(@axis_max)
