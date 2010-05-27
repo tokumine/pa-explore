@@ -59,8 +59,6 @@ $(document).ready(function() {
    
 	});
 
-
-
 	function showProfile() {
 		$('li.you div.bottom a').fadeOut(200,function(ev){
 			$('a.gotomap').fadeIn(300);
