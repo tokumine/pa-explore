@@ -80,9 +80,153 @@ a {
   list-style: disc;
 }
 
-
 /* application.css */
 #user_nav {
   float: right;
   font-size: 12px;
 }
+
+/* ------------- WEB STYLESHEETS -------- */
+
+body,div,ul,li,ol,h1,h2,h3,h4,h5,h6,form,fieldset,p{margin:0; padding:0; font-weight:normal}
+img,fieldset{border:none; padding:0; margin:0;}
+span.clear{clear:both;}
+div.left{float:left; width:auto;}
+div.right{float:right; width:auto;}
+a:focus{outline:none}
+img.left_curve{float:left;}
+img.right_curve{float:right;}
+ul {list-style:none;}
+
+div#layout {margin:0 auto; width:100%; height:100%;}
+div.left_container {position:absolute; top:0; left:0; width:256px; margin:0; padding:0; z-index:10000; height:100%; overflow:hidden;}
+
+@font-face {font-family:Junction; src:url('../fonts/Junction.otf');}
+@font-face {font-family:DINOT-Medium; src:url('../fonts/DINOT-Medium.otf');}
+
+div#right_container {position:absolute; top:0; left:10000px; width:87%; margin:0; padding:0; z-index:800; height:100%; background-color:black; overflow:hidden; }
+
+/* ---------------LEFT CONTAINER----------------- */
+div#map {position:absolute; top:0; left:0; margin:0 0 0 0; width:100%; height:100%; overflow:hidden;}
+
+div.left_container p {font-family:Geneva;}
+div.left_container div.header {float:left; width:220px; height:95px; background-color:#000000;}
+div.left_container div.header p {float:left; font-weight:normal; text-transform:uppercase; color:#FFFFFF; width:100%; letter-spacing:-1.0px;}
+div.left_container div.header p.protected_area {font-size:13px; line-height:13px; margin:25px 0 0 17px;}
+div.left_container div.header p.explorer {font-size:35px; line-height:35px; margin:0px 0 0 17px;}
+div.left_container div.rank {float:left; width:220px; height:100%; background-color:#232323;}
+div.left_container div.rank ul {width:256px; height:100%;}
+div.left_container div.rank ul li {float:left; height:85px; width:220px; margin:0; border-top:1px solid #333333; border-bottom:1px solid #111111; 
+	background:(../images/li_bkg_profile.png) repeat-y 0 0;}
+
+div.left_container div.rank ul li.shadow {	
+	box-shadow: inset 1px 1px 10px #111111;
+	-webkit-box-shadow: inset 1px 1px 10px #111111;
+	-moz-box-shadow: inset -10px 0px 10px #111111;
+}
+
+
+div.left_container div.rank ul li.user {float:left; width:100%; height:135px; border:none; 
+	background:-webkit-gradient(
+	    linear,
+		    left top,
+		    left bottom,
+		    color-stop(0.07, rgb(224,224,224)),
+		    color-stop(0.54, rgb(204,204,204))
+	);
+	
+	background:-moz-linear-gradient(
+	 	center top,
+		    rgb(224,224,224) 7%,
+		    rgb(204,204,204) 54%
+		
+	);}
+	
+div.left_container div.rank ul li.user div.data {float:left; width:100%; height:72px; margin:0; border-bottom:1px solid #CACACA; padding:0 0 10px 0;}
+
+div.left_container div.rank ul li.user div.data a.avatar { border:solid 2px #FFFFFF; -moz-box-shadow: none; -webkit-box-shadow:none; box-shadow:none; }
+		
+div.left_container div.rank ul li.user div.data div.user {margin:20px 0 0 6px; width:150px;}
+div.left_container div.rank ul li.user div.data div.user p.username {color:#333333; font:bold 15px Junction; text-shadow:none; }
+div.left_container div.rank ul li.user div.data div.user p.rank {float:left; font:normal 10px Junction; color:#333333; margin:0 0 0 3px;}
+div.left_container div.rank ul li.user div.data div.distance {width:150px; margin:0 0 0 6px;}
+div.left_container div.rank ul li.user div.data div.distance ul.amount {float:left; margin:0; width:140px; color:#FFFFFF;}
+div.left_container div.rank ul li.user div.data div.distance ul.amount li {width:13px; margin-right:1px;  height:20px; text-align:center; padding:0 0 0 1px; 
+
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+		
+	background:-webkit-gradient(
+	    linear,
+	    left top,
+	    left bottom,
+	    color-stop(0.2, rgb(82,82,82)),
+	    color-stop(0.6, rgb(51,51,51))
+	);
+	background:-moz-linear-gradient(
+    	center top,
+	    rgb(82,82,82) 20%,
+	    rgb(51,51,51) 60%
+	);
+}
+
+div.left_container div.rank ul li.user div.data div.distance ul.amount li p {text-shadow: black 0px -1px 0; font:normal 14px Dinot-Medium; line-height:18px;}
+div.left_container div.rank ul li.user div.data div.distance ul.amount li.message {background:none; float:left; font:normal 10px Geneva; text-transform:uppercase; color:#A7A7A7; width:44px; line-height:10px; margin:0; text-align:left; border:none; margin-left:4px;}
+div.left_container div.rank ul li.user div.buttons {float:left; border-top:1px solid #F0F0F0; height:52px; position:relative;}
+
+div.left_container div.rank ul li.user a.view_ranking {float:left; width:127px; height:51px; background:url(../images/ranking.png) no-repeat 0 0; border-right:1px solid #F0F0F0;}
+div.left_container div.rank ul li.user a.view_ranking:hover {background-position:0 -51px;}
+div.left_container div.rank ul li.user a.user_profile {float:left; width:127px; height:51px; background:url(../images/profile.png) no-repeat 0 0; border-left:1px solid #CACACA;}
+div.left_container div.rank ul li.user a.user_profile:hover {background-position:0 -51px;}
+
+div.left_container div.rank ul li.user a.go_back {width:256px; height:51px; background:url(../images/gotomap.png) repeat-x 0 0; position:absolute; top:0; left:0; display:none;}
+div.left_container div.rank ul li.user a.go_back:hover {background-position:0 -51px;}
+
+
+div.left_container div.rank ul li.last {border-bottom:none;}
+div.left_container div.rank ul li a.avatar {float:left; width:38px; height:38px; border:solid 2px #B6B6B6; background:url(../images/gravatar.jpg) no-repeat 0 0; margin:20px 0 0 17px; 
+	-moz-box-shadow: 0 -1px 0 black; -webkit-box-shadow:0 -1px 0 black; box-shadow:0 -1px 0 black; }
+	
+div.left_container div.rank ul li div.data {float:left; margin:20px 0 0 10px; width:145px;}
+
+div.left_container div.rank ul li div.data div.user {float:left; width:145px;}
+div.left_container div.rank ul li div.data div.user p.username {float:left; font:normal 15px Junction; color:#FFFFFF; margin:4px 0 0 0;
+	textz-shadow: black 0px -2px 0;}
+div.left_container div.rank ul li div.data div.user p.rank {float:left; font:normal 11px Junction; color:#FFFFFF; margin:0 0 0 3px;} 
+
+div.left_container div.rank ul li div.data div.distance {float:left; width:145px;}
+div.left_container div.rank ul li div.data div.distance p.amount {float:left; font:normal 13px Dinot-Medium; color:#FFFFFF; margin:3px 0 0 0; letter-spacing:1.0px;
+	text-shadow: black 0px -2px 0;}
+div.left_container div.rank ul li div.data div.distance p.difference {float:left; font:normal 10px Arial; width:60px; margin:3px 0 0 3px;
+	text-shadow: black 0px -1px 0;}
+div.left_container div.rank ul li div.data div.distance .positive {color:#AF2D2D;}
+div.left_container div.rank ul li div.data div.distance .negative {color:#3B7020;}
+
+/* ---------------RIGHT CONTAINER----------------- */
+div#right_container div.profile {float:left; margin:65px 0 0 0px; background-color:black; width:100%; height:100%; position:relative;}
+div#right_container div.profile ul.options {position:absolute; top:0; left:16px; height:30px; border-left:1px solid #444444; width:398px;}
+div#right_container div.profile ul.options li a.menu{float:left; background-color:#1A1A1A; color:#626262; font:normal 15px Junction; text-align:center; text-decoration:none; padding:7px 19px 0 19px; height:23px; border:1px solid #444444; border-left:none; border-bottom:none;}
+div#right_container div.profile ul.options li.active a.menu{float:left; background-color:#232323; color:#FFFFFF;}
+
+div#right_container div.profile div.information {float:left; border-top:1px solid #444444; width:100%; margin:30px 0 0 0; background-color:#232323; height:100%; color:#FFFFFF; padding:7px 0 0 18px;}
+
+div#right_container div.profile div.information div.feed {margin:0px 0 0 20px; float:left; width:100%;}
+div#right_container div.profile div.information div.feed ul {width:100%; height:100%; float:left; margin:0;}
+div#right_container div.profile div.information div.feed ul li {height:97px; margin:0px 0 0 0; border-top:1px solid #333333;  border-bottom:1px solid #000000; width:90%;}
+div#right_container div.profile div.information div.feed ul li.first {margin:0; border-top:none;}
+div#right_container div.profile div.information div.feed ul li.last {border-bottom:none;}
+
+
+div#right_container div.profile div.information div.feed ul li p.message {float:left; font:normal 13px Junction; color:#FFFFFF; width:100%; margin:17px 0 0 0;
+		text-shadow: black 0px -1px 0;}
+div#right_container div.profile div.information div.feed ul li p.message.founded {color:#99CCCC;}
+div#right_container div.profile div.information div.feed ul li p span.time_ago {color:#666666;}
+div#right_container div.profile div.information div.feed ul li img {float:left; width:38px; height:38px; margin:10px 10px 0px 0;}
+div#right_container div.profile div.information div.feed ul li div.text {float:left; margin:15px 0 0 2px;}
+div#right_container div.profile div.information div.feed ul li p.award {float:none; font:normal 13px Junction; color:#FFFFFF; 
+	text-shadow: black 0px -1px 0;}
+div#right_container div.profile div.information div.feed ul li a.learn_more {float:left; color:#999999; font:normal 11px Junction; text-decoration:underline;} 
+
+div#right_container div.profile div.information div.badges {display:none;}
+div#right_container div.profile div.information div.account_settings {display:none;}
+
