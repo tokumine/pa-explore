@@ -1,7 +1,7 @@
 var map;
 var projection;
 var MERCATOR_RANGE = 256;
-
+var infowindow;
 
  function bound(value, opt_min, opt_max) {
    if (opt_min != null) value = Math.max(value, opt_min);
@@ -187,6 +187,15 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
  }
 
 
+	
+	function openInfoWindow(latlng) {
+		if (infowindow!=null) {
+			infowindow.moveTo(latlng);
+		} else {
+			infowindow = new InfoWindow( latlng, map);
+		}
+	}
+
 
 	function initialize() {
 	  var myLatlng = new google.maps.LatLng(-34.397, 150.644);
@@ -203,7 +212,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
    map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
    projection = new MercatorProjection();
 
-	 var infowindow = new InfoWindow( new google.maps.LatLng(36.54088231109613, -5.533879986309818), map);
+	 infowindow = new InfoWindow( new google.maps.LatLng(36.54088231109613, -5.533879986309818), map);
 
 
    google.maps.event.addListener(map, "zoom_changed", function() {
