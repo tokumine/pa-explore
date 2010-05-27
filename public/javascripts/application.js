@@ -19,6 +19,11 @@ $(document).ready(function() {
 			ev.stopPropagation();
 			ev.preventDefault();
 			
+			var widthRightContainer = $('div#right_container').width();
+
+			$('div#right_container').css('left',-widthRightContainer);
+			$('div#right_container').show();
+			
 			$('div.rank ul li.user a.go_back').show();
 			
 			$("#right_container").animate(
@@ -26,7 +31,7 @@ $(document).ready(function() {
 						{ duration: 300,
 					    specialEasing: 'easeOutElastic'
 					}).animate(
-								{ left: 218 }, 
+								{ left: 220 }, 
 								{ duration: 200,
 							    specialEasing: 'easeOutBounce',
 									complete: function() {
@@ -48,6 +53,8 @@ $(document).ready(function() {
 			ev.stopPropagation();
 			ev.preventDefault();
 			
+			var widthRightContainer = $('div#right_container').width();
+			
 			$('div.rank ul li.user a.go_back').fadeOut();
 			
 			$("#right_container").animate(
@@ -55,15 +62,17 @@ $(document).ready(function() {
 							{ duration: 300,
 						    specialEasing: 'easeOutElastic'
 						}).animate(
-									{ left: -2000 }, 
+									{ left: -widthRightContainer }, 
 									{ duration: 200,
 								    specialEasing: 'easeOutBounce',
 										complete: function() {
 
 										}
 									});
-					
+			
+				$('div#right_container').fadeOut();
 			});
+			
 		
 		
   });

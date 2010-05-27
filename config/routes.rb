@@ -1,8 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :games
   
-  map.new_track '/new_track', :controller => "javi", :action => "new_track"
-  map.get_cells '/get_cells_by_tile', :controller => "javi", :action => "get_cells_by_tile"
+  map.tiles 'tiles/:x/:y/:z', :controller => "cells", :action => "tiles"
   
   map.resources :cells
   map.resources :classifications

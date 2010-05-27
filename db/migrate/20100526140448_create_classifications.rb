@@ -5,6 +5,7 @@ class CreateClassifications < ActiveRecord::Migration
       t.integer :y
       t.integer :z
       t.boolean :value, :default => nil
+      t.integer :position, :default => nil
       t.references :track
       t.references :cell
       t.timestamps
