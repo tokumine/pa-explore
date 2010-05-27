@@ -104,7 +104,7 @@ div.left_container {position:absolute; top:0; left:0; width:256px; margin:0; pad
 @font-face {font-family:Junction; src:url('../fonts/Junction.otf');}
 @font-face {font-family:DINOT-Medium; src:url('../fonts/DINOT-Medium.otf');}
 
-div#right_container {position:absolute; top:0; left:10000px; width:87%; margin:0; padding:0; z-index:800; height:100%; background-color:black; overflow:hidden; }
+div#right_container {position:absolute; top:0; left:0px; width:87%; margin:0; padding:0; z-index:800; height:100%; background-color:black; overflow:hidden; display:none;}
 
 /* ---------------LEFT CONTAINER----------------- */
 div#map_canvas {position:absolute; top:0; left:0; margin:0 0 0 0; width:100%; height:100%; overflow:hidden;}
