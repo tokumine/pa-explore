@@ -4,7 +4,7 @@ h1, h2, h3, h4, h5, h6, p, pre, blockquote, form, ul, ol, dl { margin: 0;}
 li, dd, blockquote { margin-left: 0;}  
 table { border-collapse: collapse; border-spacing: 0;}
 
-
+div#map_canvas {float:left; position:relative; margin:0 0 0 218px; height:100%; width:806px;}
 div.left_column {position:absolute; z-index:100; top:0; left:0; bottom:0; width:248px; background:transparent;}
 div.left_column header {float:left; width:178px; padding:25px 20px; background:#000000; height:44px;}
 div.left_column header h1 {float:left; color:white; font:normal 13px Arial; padding:0;}
@@ -12,8 +12,6 @@ div.left_column header h1 strong {font:normal 35px Arial; letter-spacing:-3px;}
 div.left_column ul {float:left; width:246px; height:596px; list-style:none; margin:0; padding:0 1px 0 0; overflow-y:scroll; overflow-x:hidden; background:none;}
 div.left_column ul li {float:left; background:#232323; margin:0; border-top: 1px solid #333333; border-bottom:1px solid #111111; padding:18px 19px; width:180px;}
 div.left_column ul li.first {border-top:1px solid #444444;}
-
-
 
 div.left_column ul li.you {position:relative; width:248px; background:white; background-image:none; padding:0; border:none; height:137px; overflow:hidden; z-index:500; -webkit-box-shadow:none; -moz-box-shadow:none;}
 div.left_column ul li.you div.top {float:left; padding:18px 0 18px 14px; width:237px; background-image: -moz-linear-gradient(100% 100% 90 deg, #FFFFFF, #E1E1E1); background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFFFFF), to(#E1E1E1)); border-bottom:1px solid #CACACA;}
