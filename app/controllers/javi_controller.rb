@@ -1,4 +1,6 @@
 class JaviController < ApplicationController
+  #max 262144
+  #top left origin
   def new_track
     x = 63484
     y = 51212
@@ -9,6 +11,7 @@ class JaviController < ApplicationController
       json << { :id => i,
                 :x => x,
                 :y => y+i,
+                :z => 17
                 :count => rand(20)}
     end            
     render  :json => json          
