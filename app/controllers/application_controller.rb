@@ -31,10 +31,12 @@ class ApplicationController < ActionController::Base
   end
   
   def iphone_request?
-    (agent = request.env["HTTP_USER_AGENT"]) && agent[/(iPhone;)/]
+    (agent = request.env["HTTP_USER_AGENT"]) && agent[/(iPhone;.+Mobile\/)/] ||
+    params[:agent] == "iphone")
   end
 
   def ipad_request?
-    (agent = request.env["HTTP_USER_AGENT"]) && agent[/(iPad;.+Mobile\/.+Safari)/]
+    (agent = request.env["HTTP_USER_AGENT"]) && (agent[/(iPad;.+Mobile\/.+Safari)/] ||
+    params[:agent] == "ipad")
   end
 end
