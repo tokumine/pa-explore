@@ -2,15 +2,16 @@ var map;
 var projection;
 var MERCATOR_RANGE = 256;
 var infowindow;
-var trackData = [
-    {x:63517,y:51217,z:17,surprise:false},
-    {x:63517,y:51218,z:17,surprise:false},
-    {x:63517,y:51219,z:17,surprise:false},
-    {x:63517,y:51220,z:17,surprise:false},
-    {x:63518,y:51220,z:17,surprise:false},
-    {x:63519,y:51220,z:17,surprise:false},
-    {x:63520,y:51220,z:17,surprise:false}
-];
+var trackData = [];
+// [
+//     {x:63517,y:51217,z:17,surprise:false; id:1000},
+//     {x:63517,y:51218,z:17,surprise:false; id:2000},
+//     {x:63517,y:51219,z:17,surprise:false; id:3000},
+//     {x:63517,y:51220,z:17,surprise:false; id:4000},
+//     {x:63518,y:51220,z:17,surprise:false; id:5000},
+//     {x:63519,y:51220,z:17,surprise:false; id:6000},
+//     {x:63520,y:51220,z:17,surprise:false; id:7000}
+// ];
 
 
 
@@ -36,6 +37,7 @@ function MercatorProjection() {
   this.pixelsPerLonDegree_ = MERCATOR_RANGE / 360;
   this.pixelsPerLonRadian_ = MERCATOR_RANGE / (2 * Math.PI);
 };
+
 MercatorProjection.prototype.fromLatLngToPoint = function(latLng, opt_point) {
   var me = this;
 
@@ -113,9 +115,9 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
    }        
    ctx.stroke();    
 
-   // ctx.fillStyle    = '#d6d6d6';
-   //    ctx.font         = 'bold 10px sans-serif'
-   //    ctx.fillText(zoom + ' / '+coord.x+ ' / '+coord.y, 10, 10);
+    ctx.fillStyle    = '#d6d6d6';
+    ctx.font         = 'bold 10px sans-serif'
+   	ctx.fillText(zoom + ' / '+coord.x+ ' / '+coord.y, 10, 10);
 
 
    cross.strokeStyle = "#FFF";
@@ -174,29 +176,49 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
    console.log(tileCoordStr) 
  }
 
- function getTileIdforCell(cell) {
+ function getCellLatLngCenter(z,x,y) {
+     //calculate the bounds of the cell
+     var bounds = getTileBounds(z,x,y);
+         
+    return bounds.getCenter();
+ }
+ 
+ //getTileBounds(17,63517,51217)
+ function getTileBounds(z,x,y) {
+    
+    var foo = pixelsToMeters(x*256,y*256,z);
+ 	var maxx =foo.x;
+ 	var miny =foo.y;
 
+    foo = pixelsToMeters((x+1)*256,(y+1)*256,z);
+ 	var minx =foo.x;
+ 	var maxy =foo.y;
+ 	
+    var sw = metersToLatLon(miny,minx);
+    var ne = metersToLatLon(maxy,maxx);
+ 	
+ 	var latLngBounds = new google.maps.LatLngBounds(sw,ne);
+ 	
+    return latLngBounds;	
  }
 
-
- function random_color(format)
- {
-  var rint = Math.round(0xffffff * Math.random());
-  switch(format)
-  {
-   case 'hex':
-    return ('#0' + rint.toString(16)).replace(/^#0([0-9a-f]{6})$/i, '#$1');
-   break;
-
-   case 'rgb':
-    return 'rgb(' + (rint >> 16) + ',' + (rint >> 8 & 255) + ',' + (rint & 255) + ')';
-   break;
-
-   default:
-    return rint;
-   break;
-  }
+ function pixelsToMeters(x,y,z) {
+     var originShift = 2 * Math.PI * 6378137 / 2.0;
+     var res = (2 * Math.PI * 6378137) / (256 * Math.pow(2,z));
+ 	 var mx = x * res - originShift;
+ 	 var my = -(y * res - originShift);   
+     return {x:mx,y:my};
  }
+ 
+ function metersToLatLon(x, y) {
+     
+	lon = (x / (2 * Math.PI * 6378137 / 2.0)) * 180.0;
+	lat = (y / (2 * Math.PI * 6378137 / 2.0)) * 180.0;
+
+	lat = 180 / Math.PI * (2 * Math.atan( Math.exp( lat * Math.PI / 180.0)) - Math.PI / 2.0);
+	return new google.maps.LatLng(lat,lon);  
+ }
+
 
 
 	
@@ -210,11 +232,11 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 
 
 	function initialize() {
-	  var myLatlng = new google.maps.LatLng(-34.397, 150.644);
-		
+	  var myLatlng = new google.maps.LatLng(84.95544230153216, 160.499267578125);
+
    var mapOptions = {
-     zoom: 15,
-     center: new google.maps.LatLng(36.54088231109613, -5.533879986309818),
+     zoom: 3,
+     center: myLatlng,
      mapTypeId: google.maps.MapTypeId.SATELLITE,
      mapTypeControl: false,
      navigationControl: false,
@@ -223,7 +245,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
    map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
    projection = new MercatorProjection();
 
-	 infowindow = new InfoWindow( new google.maps.LatLng(36.54088231109613, -5.533879986309818), map);
+	 // infowindow = new InfoWindow( new google.maps.LatLng(36.54088231109613, -5.533879986309818), map);
 
 
    google.maps.event.addListener(map, "zoom_changed", function() {
@@ -234,8 +256,88 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
    google.maps.event.addListener(map, "click", function(event) {
        getTileByLatLng(event.latLng);
        getCellByLatLng(event.latLng);
-   });    
+   });
 
-
-   map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)));
+	$.ajax({
+	   type: "POST",
+	   url: "tracks",
+	   success: function(result){
+			 console.log(result);
+			 trackData = result;
+			 map.setCenter(getCellLatLngCenter(trackData[0].z,trackData[0].x,trackData[0].y));
+	     // hideLoading();
+			 setTimeout('map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)))',1000);
+			setTimeout('map.overlayMapTypes.insertAt(0, new FillMap(new google.maps.Size(256, 256)))',1000);
+	   }
+	 });
 	}
+	
+	
+	
+	
+	
+	function FillMap(tileSize) {
+	   this.tileSize = tileSize;
+	 }
+
+	 FillMap.prototype.getTile = function(coord, zoom, ownerDocument) {
+		var canvas = document.createElement("canvas");
+	   if (typeof G_vmlCanvasManager != 'undefined') 
+	     G_vmlCanvasManager.initElement(canvas);
+
+	   var id = 'id-' + coord.x + '-' + coord.y + '-' + zoom;
+
+	   canvas.id = id;
+	   canvas.width = canvas.height = 256;
+	   canvas.style.width = '256px';
+	   canvas.style.height = '256px';	
+	   canvas.style.left = '0px';
+	   canvas.style.top =  '0px';
+	   canvas.style.position = "relative";	
+	
+
+		$.ajax({
+		   type: "GET",
+		   url: "tiles/"+coord.x+"/"+coord.y+'/15',
+		   success: function(result){	
+					console.log(result);
+	 			  var rect = canvas.getContext("2d");
+
+					var r = Math.floor(Math.random()*256);
+					var g = Math.floor(Math.random()*256);
+					var b = Math.floor(Math.random()*256);
+
+			   rect.strokeStyle = getHex(r,g,b);
+			   rect.lineWidth   = 2;
+			   rect.beginPath();
+
+	 			  var cells = 16;
+	 
+	 			  var cellsSize = 256/cells;
+	 			 	for (var i = 0; i < cells; i++) {
+	 					for (var j = 0; j<cells; j++) {
+							 rect.moveTo((cellsSize*i)+5,(cellsSize*j));
+					     rect.lineTo((cellsSize*i),(cellsSize*j)+5);
+	 						//rect.fillRect  (cellsSize*i, cellsSize*j, cellsSize*(i+1),cellsSize*(j+1));
+	 					}
+	 			  }        
+	 			  rect.stroke();    
+		   }
+		 });
+		return canvas;
+	   
+	 };
+	
+	
+	// intToHex()
+	 function intToHex(n){
+	 	n = n.toString(16);
+	 	// eg: #0099ff. without this check, it would output #099ff
+	 	if( n.length < 2)
+	 		n = "0"+n;
+	 	return n;
+	 }
+	
+	function getHex(r, g, b){
+	 	return '#'+intToHex(r)+intToHex(g)+intToHex(b);
+	 }
