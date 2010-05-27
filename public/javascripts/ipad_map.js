@@ -101,9 +101,9 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
    }        
    ctx.stroke();    
 
-   ctx.fillStyle    = '#d6d6d6';
-   ctx.font         = 'bold 10px sans-serif'
-   ctx.fillText(zoom + ' / '+coord.x+ ' / '+coord.y, 10, 10);
+   // ctx.fillStyle    = '#d6d6d6';
+   //    ctx.font         = 'bold 10px sans-serif'
+   //    ctx.fillText(zoom + ' / '+coord.x+ ' / '+coord.y, 10, 10);
 
 
    cross.strokeStyle = "#FFF";
