@@ -8,11 +8,12 @@ class JaviController < ApplicationController
     json = []
     
     APP_CONFIG[:cells_per_track].times do |i|
+      surprise = rand() < 0.5 ? "true" : "false"
       json << { :id => i,
                 :x => x,
                 :y => y+i,
                 :z => 17
-                :count => rand(20)}
+                :surprise => surprise}
     end            
     render  :json => json          
   end

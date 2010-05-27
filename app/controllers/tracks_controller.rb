@@ -6,14 +6,14 @@ class TracksController < ApplicationController
     json = []
     
     APP_CONFIG[:cells_per_track].times do |i|
+      surprise = rand() < 0.5 ? "true" : "false"
       json << { :id => i,
                 :x => x,
                 :y => y+i,
-                :count => rand(20)}
+                :z => 17
+                :surprise => surprise}
     end            
-    
-    
-    render  :json => json      
+    render  :json => json          
     
     #@track = Track.new(params[:track])
     #@track.user = current_user
