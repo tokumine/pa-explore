@@ -8,8 +8,10 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password
   
-  helper_method :current_user
-  
+  helper_method :current_user  
+  before_filter :adjust_format_for_apple_requests
+
+
   private
 
   def current_user_session
@@ -20,5 +22,19 @@ class ApplicationController < ActionController::Base
   def current_user
     return @current_user if defined?(@current_user)
     @current_user = current_user_session && current_user_session.record
+  end
+  
+  # detect apple requests  
+  def adjust_format_for_apple_requests
+    request.format = :iphone if iphone_request?
+    request.format = :ipad if ipad_request?
+  end
+  
+  def iphone_request?
+    (agent = request.env["HTTP_USER_AGENT"]) && agent[/(iPhone;.+Mobile\/)/]
+  end
+
+  def ipad_request?
+    (agent = request.env["HTTP_USER_AGENT"]) && agent[/(iPad;.+Mobile\/.+Safari)/]
   end
 end

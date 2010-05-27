@@ -11,6 +11,8 @@ class TracksController < ApplicationController
                 :y => y+i,
                 :count => rand(20)}
     end            
+    
+    
     render  :json => json      
     
     #@track = Track.new(params[:track])
