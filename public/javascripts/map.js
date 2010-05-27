@@ -235,7 +235,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 	  var myLatlng = new google.maps.LatLng(84.95544230153216, 160.499267578125);
 
    var mapOptions = {
-     zoom: 15,
+     zoom: 3,
      center: myLatlng,
      mapTypeId: google.maps.MapTypeId.SATELLITE,
      mapTypeControl: false,
@@ -264,7 +264,8 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 	   success: function(result){
 			 console.log(result);
 			 trackData = result;
-	     hideLoading();
+			 map.setCenter(getCellLatLngCenter(trackData[0].z,trackData[0].x,trackData[0].y));
+	     // hideLoading();
 			 setTimeout('map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)))',1000);
 			setTimeout('map.overlayMapTypes.insertAt(0, new FillMap(new google.maps.Size(256, 256)))',1000);
 	   }
@@ -306,15 +307,10 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 					var g = Math.floor(Math.random()*256);
 					var b = Math.floor(Math.random()*256);
 
-
-	
 			   rect.strokeStyle = getHex(r,g,b);
 			   rect.lineWidth   = 2;
 			   rect.beginPath();
 
-	
-	
-	 
 	 			  var cells = 16;
 	 
 	 			  var cellsSize = 256/cells;
