@@ -7,12 +7,19 @@ class Track < ActiveRecord::Base
   
   def generate_track (x=nil, y=nil)    
     @total_cells = (2**17)**2    
-    @axis_min = 0
-    @axis_max = 32#2**17
+    @axis_max = 2**17
+    
+    #FOR TESTING - REPLACE WITH rand(@axis_max) later
+    @x_min = 63514
+    @y_min = 51214
+    @x_range = 24
+    @y_range = 36
+
+    
         
     #1 Choose a random starting point    
-    x ||= rand(@axis_max)
-    y ||= rand(@axis_max)
+    x ||= rand(@x_range) + @x_min #FOR TESTING - REPLACE WITH rand(@axis_max) later
+    y ||= rand(@y_range) + @y_min
     z = 17
     
     APP_CONFIG[:cells_per_track].times do |i|      
