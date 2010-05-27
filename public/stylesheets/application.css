@@ -177,7 +177,7 @@ div.left_container div.rank ul li.user div.data div.distance ul.amount li {width
 	);
 }
 
-div.left_container div.rank ul li.user div.data div.distance ul.amount li p {text-shadow: black 0px -1px 0; font:normal 14px Dinot-Medium; line-height:18px;}
+div.left_container div.rank ul li.user div.data div.distance ul.amount li p {text-shadow: black 0px -1px 0; font:normal 14px DINOT-Medium; line-height:18px;}
 div.left_container div.rank ul li.user div.data div.distance ul.amount li.message {background:none; float:left; font:normal 10px Geneva; text-transform:uppercase; color:#A7A7A7; width:44px; line-height:10px; margin:0; text-align:left; border:none; margin-left:4px;}
 div.left_container div.rank ul li.user div.buttons {float:left; border-top:1px solid #F0F0F0; height:52px; position:relative;}
 
@@ -204,9 +204,9 @@ div.left_container div.rank ul li div.data div.user p.username {float:left; font
 div.left_container div.rank ul li div.data div.user p.rank {float:left; font:normal 11px Junction; color:#B3B3B3; margin:0 0 0 3px;} 
 
 div.left_container div.rank ul li div.data div.distance {float:left; width:145px;}
-div.left_container div.rank ul li div.data div.distance p.amount {float:left; font:normal 13px Dinot-Medium; color:#B3B3B3; margin:3px 0 0 0; letter-spacing:1.0px;
+div.left_container div.rank ul li div.data div.distance p.amount {float:left; font:normal 13px DINOT-Medium; color:#B3B3B3; margin:3px 0 0 0; letter-spacing:1.0px;
 	text-shadow: black 0px -2px 0;}
-div.left_container div.rank ul li div.data div.distance p.difference {float:left; font:normal 11px Dinot-Medium; width:60px; margin:6px 0 0 3px; line-height:12px;
+div.left_container div.rank ul li div.data div.distance p.difference {float:left; font:normal 11px DINOT-Medium; width:60px; margin:6px 0 0 3px; line-height:12px;
 	text-shadow: black 0px -1px 0;}
 div.left_container div.rank ul li div.data div.distance .positive {color:#AF2D2D;}
 div.left_container div.rank ul li div.data div.distance .negative {color:#3B7020;}
