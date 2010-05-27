@@ -119,6 +119,11 @@ InfoWindow.prototype.toggle = function() {
   }
 }
 
+InfoWindow.prototype.moveTo = function(latlng) {
+  this.latlng_ = latlng;
+}
+
+
 InfoWindow.prototype.toggleDOM = function() {
   if (this.getMap()) {
     this.setMap(null);
