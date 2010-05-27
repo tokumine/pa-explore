@@ -1,14 +1,4 @@
 var isMoving = false;
-var trackData = [
-    {x:63517,y:51217,z:17,surprise:false},
-    {x:63517,y:51218,z:17,surprise:false},
-    {x:63517,y:51219,z:17,surprise:false},
-    {x:63517,y:51220,z:17,surprise:false},
-    {x:63518,y:51220,z:17,surprise:false},
-    {x:63519,y:51220,z:17,surprise:false},
-    {x:63520,y:51220,z:17,surprise:false}
-];
-
 
 $(document).ready(function() {
 
