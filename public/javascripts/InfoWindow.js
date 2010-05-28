@@ -2,7 +2,8 @@ InfoWindow.prototype = new google.maps.OverlayView();
 
 
 function InfoWindow(latlng, map) {
-
+	
+console.log(latlng);
   this.latlng_ = latlng;
   this.map_ = map;
 
@@ -110,7 +111,9 @@ InfoWindow.prototype.onAdd = function() {
 	
 	var image_static_layer = document.createElement('img');
 	
-	image_static_layer.setAttribute('src', 'http://maps.google.com/staticmap?center=51.477222,0&zoom=15&size=150x150&sensor=false&key=ABQIAAAAsIunaSEq-72JsQD5i92_2RSBAjOOhu3AGseSip9oOKv69lUsGxQJJZ1BfzmSIDX0FfGUGpci0uokE');
+	var url_static_image = 'http://maps.google.com/staticmap?center='+this.latlng_.b+','+this.latlng_.c+'&zoom=15&size=150x150&sensor=false&key=ABQIAAAAsIunaSEq-72JsQD5i92_2RSBAjOOhu3AGseSip9oOKv69lUsGxQJJZ1BfzmSIDX0FfGUGpci0uokE&maptype=satellite';
+	
+	image_static_layer.setAttribute('src', url_static_image);
 	image_static_layer.setAttribute('alt', 'Map discovered');
 	image_static_layer.setAttribute('height', '150px');
 	image_static_layer.setAttribute('width', '150px');

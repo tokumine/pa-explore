@@ -226,7 +226,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 		if (infowindow!=null) {
 			infowindow.moveTo(latlng);
 		} else {
-			infowindow = new InfoWindow( latlng, map);
+			infowindow = new InfoWindow(latlng, map);
 		}
 	}
 
