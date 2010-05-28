@@ -4,6 +4,9 @@
 // 
 
 $(document).ready(function() {
+	
+	
+		
 		
 		$('div.profile ul.options li a.menu').click(function(ev){
 			ev.stopPropagation();
