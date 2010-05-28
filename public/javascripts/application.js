@@ -1,9 +1,32 @@
-// Place your application-specific JavaScript functions and classes here
-// This file is automatically included by javascript_include_tag :defaults
-// 
-// 
+
 
 $(document).ready(function() {
+	$('#map_canvas').css('height',window.innerHeight+'px');
+	$('#map_canvas').css('width',window.innerWidth-220+'px');
+	window.onresize = function() {
+		$('#map_canvas').css('height',window.innerHeight+'px');
+		$('#map_canvas').css('width',window.innerWidth-220+'px');
+	}
+	
+
+	$.ajax({
+	   type: "GET",
+	   url: "users/rank",
+	   success: function(result) {	
+
+				console.log(result);
+				for (var i=0; i<result.length; i++) {
+					if (!result[i].current_user) {
+						var li_html = '<li class="other_user"><div class="image"><img src="'+result[i].avatar+'" alt="'+result[i].username+'"/></div><div class="data"><p class="username">'+result[i].username+'<sup>(1th)</sup></p><p class="amount">'+result[i].meters_explored+'m<small>('+result[i].meters_different+'m)</small></p></div></li>';
+						$('div.rank ul').append(li_html);
+					} else {
+						var li_html = 'asdf';
+						$('div.rank ul').append(li_html);
+					}
+				}
+	   }
+	 });
+		
 		
 		$('div.profile ul.options li a.menu').click(function(ev){
 			ev.stopPropagation();
