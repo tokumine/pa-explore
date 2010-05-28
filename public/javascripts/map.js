@@ -267,6 +267,11 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 				
 			 //map.setCenter(getCellLatLngCenter(trackData[0].z,trackData[0].x,trackData[0].y));
 	     // hideLoading();
+			var marker = new google.maps.Marker({
+			        position: myLatlng, 
+			        map: map,
+			        title:"Hello World!"
+			    });
 
 			 setTimeout('map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)))',1000);
 			 setTimeout('map.overlayMapTypes.insertAt(0, new FillMap(new google.maps.Size(256, 256)))',1000);

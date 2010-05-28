@@ -211,7 +211,7 @@ InfoWindow.prototype.onAdd = function() {
   this.div_ = div;
 
   var panes = this.getPanes();
-  panes.floatPane.appendChild(this.div_);
+  panes.overlayLayer.appendChild(this.div_);
 }
 
 InfoWindow.prototype.draw = function() {
@@ -219,10 +219,10 @@ InfoWindow.prototype.draw = function() {
   var pixPosition = this.getProjection().fromLatLngToDivPixel(this.latlng_);
   if (!pixPosition) return;
 
-  this.div_.style.left = (pixPosition.x - 150) + "px";
+  this.div_.style.left = (pixPosition.x - 126) + "px";
 //  this.div_.style.width = '440px';
 //  this.div_.style.height = '150px';
-  this.div_.style.top = (pixPosition.y - 150) + "px";
+  this.div_.style.top = (pixPosition.y - 85) + "px";
 
 }
 
