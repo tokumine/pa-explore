@@ -256,7 +256,6 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 	   type: "POST",
 	   url: "/tracks",
 	   success: function(result){
-			 console.log(result);
 			 trackData = result;
 				
 			 //map.setCenter(getCellLatLngCenter(trackData[0].z,trackData[0].x,trackData[0].y));
@@ -298,7 +297,6 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 		   type: "GET",
 		   url: "tiles/"+coord.x+"/"+coord.y+'/15',
 		   success: function(result){	
-					console.log(result);
 	 			  var context = canvas.getContext("2d");
 	
 	 			  var cells = 16;
@@ -320,8 +318,11 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 						var x=0;
 						var y=0;
 		 			 	for (var i = x_coord; i < (x_coord + 4); i++) {
-		 					for (var j = y_coord; j< (y_coord + 4); j++) {	
-								context.drawImage(checkCellType(result,i,j), (cellsSize*x), (cellsSize*y));
+		 					for (var j = y_coord; j< (y_coord + 4); j++) {
+								var image = checkCellType(result,i,j);
+								if (image!=null) {
+									context.drawImage(image, (cellsSize*x), (cellsSize*y));
+								}
 								y = y+1;
 		 					}
 							y = 0;
@@ -339,7 +340,11 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 	function checkCellType(data,coord_x,coord_y) {
 		
 		//check if this is the track
-
+		for (var j=0; j<trackData.length; j++) {
+			if (trackData[j].x==coord_x && trackData[j].y==coord_y) {
+				return null;
+			}
+		}
 		//if not appear in the track choose stripes image
 		for (var i=0; i<data.length; i++) {
 			if (data[i].x==coord_x && data[i].y==coord_y) {
