@@ -23,7 +23,7 @@ class Explorer
     return if @distance == 0
     move
     survey
-    explore
+    explore!
   end
   
   # GAME SPACE
