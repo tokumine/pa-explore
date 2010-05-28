@@ -30,8 +30,8 @@ InfoWindow.prototype.onAdd = function() {
 	div_content.style.width = '440px';
 	div_content.style.height = '140px';
 	
-	$(div_content).css('background','-webkit-gradient(linear,left top,right top,color-stop(0.26, rgb(35,35,35)),color-stop(0.6, rgb(18,18,18)))');
-	$(div_content).css('background','-moz-linear-gradient(left center,rgb(35,35,35) 26%,rgb(18,18,18) 60%)');
+	$(div_content).css('background','-webkit-gradient(linear,left bottom,left top,color-stop(0, rgb(35,35,35)),color-stop(1, rgb(18,18,18)))');
+	$(div_content).css('background','-moz-linear-gradient(left bottom,rgb(35,35,35) 0%,rgb(18,18,18) 100%)');
 	
 	div.appendChild(div_content);
 	
