@@ -9,4 +9,3 @@ test:
 production:
   cells_per_track: 20
   meters_per_cell: 10
-  
