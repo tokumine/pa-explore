@@ -115,7 +115,7 @@ div.left_column ul li {float:left; background:#232323; margin:0; border-top: 1px
 div.left_container {position:absolute; top:0; left:0; width:256px; margin:0; padding:0; z-index:10000; height:100%; overflow:hidden;}
 
 @font-face {font-family:Junction; src:url('../fonts/Junction.otf');}
-@font-face {font-family:DINOT-Medium; src:url('..fonts/DINOT-Medium.otf');}
+@font-face {font-family:DINOT-Medium; src:url('../fonts/DINOT-Medium.otf');}
 
 div#right_container {position:absolute; top:0; left:0px; width:87%; margin:0; padding:0; z-index:800; height:100%; background-color:black; overflow:hidden; display:none;}
 
