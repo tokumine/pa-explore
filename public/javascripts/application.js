@@ -9,23 +9,23 @@ $(document).ready(function() {
 	}
 	
 
-	$.ajax({
-	   type: "GET",
-	   url: "users/rank",
-	   success: function(result) {	
-
-				console.log(result);
-				for (var i=0; i<result.length; i++) {
-					if (!result[i].current_user) {
-						var li_html = '<li class="other_user"><div class="image"><img src="'+result[i].avatar+'" alt="'+result[i].username+'"/></div><div class="data"><p class="username">'+result[i].username+'<sup>(1th)</sup></p><p class="amount">'+result[i].meters_explored+'m<small>('+result[i].meters_different+'m)</small></p></div></li>';
-						$('div.rank ul').append(li_html);
-					} else {
-						var li_html = 'asdf';
-						$('div.rank ul').append(li_html);
-					}
-				}
-	   }
-	 });
+	// $.ajax({
+	//    type: "GET",
+	//    url: "users/rank",
+	//    success: function(result) {	
+	// 
+	// 			console.log(result);
+	// 			for (var i=0; i<result.length; i++) {
+	// 				if (!result[i].current_user) {
+	// 					var li_html = '<li class="other_user"><div class="image"><img src="'+result[i].avatar+'" alt="'+result[i].username+'"/></div><div class="data"><p class="username">'+result[i].username+'<sup>(1th)</sup></p><p class="amount">'+result[i].meters_explored+'m<small>('+result[i].meters_different+'m)</small></p></div></li>';
+	// 					$('div.rank ul').append(li_html);
+	// 				} else {
+	// 					var li_html = 'asdf';
+	// 					$('div.rank ul').append(li_html);
+	// 				}
+	// 			}
+	//    }
+	//  });
 		
 		
 		$('div.profile ul.options li a.menu').click(function(ev){
