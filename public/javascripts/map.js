@@ -245,7 +245,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
    map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
    projection = new MercatorProjection();
 
-	 //infowindow = new InfoWindow( new google.maps.LatLng(36.54088231109613, -5.533879986309818), map);
+	 infowindow = new InfoWindow( new google.maps.LatLng(36.54088231109613, -5.533879986309818), map);
 
 
    google.maps.event.addListener(map, "zoom_changed", function() {
@@ -267,14 +267,12 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 				
 			 //map.setCenter(getCellLatLngCenter(trackData[0].z,trackData[0].x,trackData[0].y));
 	     // hideLoading();
+
 			 setTimeout('map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)))',1000);
 			 setTimeout('map.overlayMapTypes.insertAt(0, new FillMap(new google.maps.Size(256, 256)))',1000);
 	   }
 	 });
 	}
-	
-	
-	
 	
 	
 	function FillMap(tileSize) {
