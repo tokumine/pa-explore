@@ -164,7 +164,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
    var tileCoordinate = new google.maps.Point(Math.floor(pixelCoordinate.x / MERCATOR_RANGE), Math.floor(pixelCoordinate.y / MERCATOR_RANGE));
 
    var tileCoordStr = "Tile Coordinate: " + tileCoordinate.x + " , " + tileCoordinate.y + " at Zoom Level: " + map.getZoom();
-   console.log(tileCoordStr)
+   console.log(tileCoordStr);
  }
 
  function getCellByLatLng(latlng) {
@@ -226,7 +226,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 		if (infowindow!=null) {
 			infowindow.moveTo(latlng);
 		} else {
-			infowindow = new InfoWindow( latlng, map);
+			infowindow = new InfoWindow(latlng, map);
 		}
 	}
 
@@ -260,15 +260,21 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 
 	$.ajax({
 	   type: "POST",
-	   url: "tracks",
+	   url: "/tracks",
 	   success: function(result){
 			 console.log(result);
 			 trackData = result;
 				
 			 //map.setCenter(getCellLatLngCenter(trackData[0].z,trackData[0].x,trackData[0].y));
-	     	//hideLoading();
+	     // hideLoading();
+			// var marker = new google.maps.Marker({
+			//         position: myLatlng, 
+			//         map: map,
+			//         title:"Hello World!"
+			//     });
+
 			 setTimeout('map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)))',1000);
-			setTimeout('map.overlayMapTypes.insertAt(0, new FillMap(new google.maps.Size(256, 256)))',1000);
+			 setTimeout('map.overlayMapTypes.insertAt(0, new FillMap(new google.maps.Size(256, 256)))',1000);
 	   }
 	 });
 	}
@@ -284,6 +290,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 	     G_vmlCanvasManager.initElement(canvas);
 
 	   var id = 'id-' + coord.x + '-' + coord.y + '-' + zoom;
+		 console.log(id);
 
 	   canvas.id = id;
 	   canvas.width = canvas.height = 256;
@@ -299,69 +306,40 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 		   url: "tiles/"+coord.x+"/"+coord.y+'/15',
 		   success: function(result){	
 					console.log(result);
-	 			  var rect = canvas.getContext("2d");
+	 			  var context = canvas.getContext("2d");
 
 					var r = Math.floor(Math.random()*256);
 					var g = Math.floor(Math.random()*256);
 					var b = Math.floor(Math.random()*256);
 
-			   // rect.strokeStyle = getHex(r,g,b);
-				 rect.strokeStyle='#000000';
-			   rect.lineWidth   = 2;
-			   rect.beginPath();
-
+				
 	 			  var cells = 16;
-	 
 	 			  var cellsSize = 64;
-	 			 	for (var i = 0; i < 4; i++) {
-	 					for (var j = 0; j<4; j++) {
-							if (i!=3 && j!=3 && j!=1) {
-							 rect.moveTo((cellsSize*i),(cellsSize*j)+10);
-					     rect.lineTo((cellsSize*i)+10,(cellsSize*j));
-							 rect.moveTo((cellsSize*i),(cellsSize*j)+20);
-					     rect.lineTo((cellsSize*i)+20,(cellsSize*j));
-							 rect.moveTo((cellsSize*i),(cellsSize*j)+30);
-					     rect.lineTo((cellsSize*i)+30,(cellsSize*j));
-							 rect.moveTo((cellsSize*i),(cellsSize*j)+40);
-					     rect.lineTo((cellsSize*i)+40,(cellsSize*j));
-							 rect.moveTo((cellsSize*i),(cellsSize*j)+50);
-					     rect.lineTo((cellsSize*i)+50,(cellsSize*j));
-							 rect.moveTo((cellsSize*i),(cellsSize*j)+60);
-					     rect.lineTo((cellsSize*i)+60,(cellsSize*j));
-
-							 rect.moveTo((cellsSize*(i+1)),(cellsSize*(j+1))-10);
-					     rect.lineTo((cellsSize*(i+1))-10,(cellsSize*(j+1)));
-							 rect.moveTo((cellsSize*(i+1)),(cellsSize*(j+1))-20);
-					     rect.lineTo((cellsSize*(i+1))-20,(cellsSize*(j+1)));
-							 rect.moveTo((cellsSize*(i+1)),(cellsSize*(j+1))-30);
-					     rect.lineTo((cellsSize*(i+1))-30,(cellsSize*(j+1)));
-							 rect.moveTo((cellsSize*(i+1)),(cellsSize*(j+1))-40);
-					     rect.lineTo((cellsSize*(i+1))-40,(cellsSize*(j+1)));
-							 rect.moveTo((cellsSize*(i+1)),(cellsSize*(j+1))-50);
-					     rect.lineTo((cellsSize*(i+1))-50,(cellsSize*(j+1)));
-							 rect.moveTo((cellsSize*(i+1)),(cellsSize*(j+1))-60);
-					     rect.lineTo((cellsSize*(i+1))-60,(cellsSize*(j+1)));
-					}
-	 						//rect.fillRect  (cellsSize*i, cellsSize*j, cellsSize*(i+1),cellsSize*(j+1));
-	 					}
-	 			  }        
-	 			  rect.stroke();    
+				
+				  var stripes1 = new Image();
+					stripes1.src = "images/stripes.png";
+					var stripes2 = new Image();
+				  stripes2.src = "images/stripes_2.png";
+					var stripes3 = new Image();
+				  stripes3.src = "images/stripes_3.png";
+				  stripes3.onload = function() {
+		 			 	for (var i = 0; i < 4; i++) {
+		 					for (var j = 0; j<4; j++) {
+								if (i!=3 && j!=3 && j!=1) {
+									context.drawImage(stripes1, (cellsSize*i), (cellsSize*j));
+								} else {
+									if (j==3) {
+										context.drawImage(stripes2, (cellsSize*i), (cellsSize*j));
+									} else {
+										context.drawImage(stripes3, (cellsSize*i), (cellsSize*j));
+									}
+								}
+		 					}
+		 			  }        
+				  };
 		   }
 		 });
 		return canvas;
 	   
 	 };
-	
-	
-	// intToHex()
-	 function intToHex(n){
-	 	n = n.toString(16);
-	 	// eg: #0099ff. without this check, it would output #099ff
-	 	if( n.length < 2)
-	 		n = "0"+n;
-	 	return n;
-	 }
-	
-	function getHex(r, g, b){
-	 	return '#'+intToHex(r)+intToHex(g)+intToHex(b);
-	 }
+

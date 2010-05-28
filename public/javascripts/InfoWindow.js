@@ -2,7 +2,8 @@ InfoWindow.prototype = new google.maps.OverlayView();
 
 
 function InfoWindow(latlng, map) {
-
+	
+console.log(latlng);
   this.latlng_ = latlng;
   this.map_ = map;
 
@@ -23,14 +24,14 @@ InfoWindow.prototype.onAdd = function() {
 	$(div_content).css('background-color','#212121'); 
 	div_content.style.borderWidth = "0px";
 	div_content.style.position = "absolute";
-	div_content.style.top = '6px';
+	div_content.style.top = '9px';
 	div_content.style.left = '0';
 	
 	div_content.style.width = '440px';
 	div_content.style.height = '140px';
 	
-	$(div_content).css('background','-webkit-gradient(linear,left top,right top,color-stop(0.26, rgb(35,35,35)),color-stop(0.6, rgb(18,18,18)))');
-	$(div_content).css('background','-moz-linear-gradient(left center,rgb(35,35,35) 26%,rgb(18,18,18) 60%)');
+	$(div_content).css('background','-webkit-gradient(linear,left bottom,left top,color-stop(0, rgb(35,35,35)),color-stop(1, rgb(18,18,18)))');
+	$(div_content).css('background','-moz-linear-gradient(left bottom,rgb(35,35,35) 0%,rgb(18,18,18) 100%)');
 	
 	div.appendChild(div_content);
 	
@@ -108,21 +109,35 @@ InfoWindow.prototype.onAdd = function() {
 	
 	div_content.appendChild(arrow_down);
 	
+	var image_static_layer = document.createElement('img');
+	
+	var url_static_image = 'http://maps.google.com/staticmap?center='+this.latlng_.b+','+this.latlng_.c+'&zoom=15&size=150x150&sensor=false&key=ABQIAAAAsIunaSEq-72JsQD5i92_2RSBAjOOhu3AGseSip9oOKv69lUsGxQJJZ1BfzmSIDX0FfGUGpci0uokE&maptype=satellite';
+	
+	image_static_layer.setAttribute('src', url_static_image);
+	image_static_layer.setAttribute('alt', 'Map discovered');
+	image_static_layer.setAttribute('height', '150px');
+	image_static_layer.setAttribute('width', '150px');
+
+	image_static_layer.style.position = "absolute";
+	image_static_layer.style.top = "3px";
+	image_static_layer.style.left = "53px";
+	div.appendChild(image_static_layer);
+	
 	
 	var layer_selected = document.createElement('DIV');
 	layer_selected.style.border = "3px solid #FFFFFF";
 	$(layer_selected).css('-moz-border-radius','5px');
 	$(layer_selected).css('-webkit-border-radius','5px');
 	
-	//layer_selected.style.borderWidth = "0px";
 	layer_selected.style.position = "absolute";
 	layer_selected.style.width = '150px';
-	//layer_selected.style.padding = '18px 13px 29px 13px';
 	layer_selected.style.height = '150px';
 	layer_selected.style.top = "0";
 	layer_selected.style.left = "50px";
 	$(layer_selected).css('background','url(../images/alpha_layer_infowindow.png) no-repeat 0 0'); 					
 	div.appendChild(layer_selected);
+		
+		
 		
 	var title = document.createElement('h3');
   		title.style.border = "none";
@@ -193,12 +208,10 @@ InfoWindow.prototype.onAdd = function() {
 		$(this).css('background-position','0 -38px');
 	});
 
-	
-
   this.div_ = div;
 
   var panes = this.getPanes();
-  panes.floatPane.appendChild(this.div_);
+  panes.overlayLayer.appendChild(this.div_);
 }
 
 InfoWindow.prototype.draw = function() {
@@ -206,10 +219,10 @@ InfoWindow.prototype.draw = function() {
   var pixPosition = this.getProjection().fromLatLngToDivPixel(this.latlng_);
   if (!pixPosition) return;
 
-  this.div_.style.left = (pixPosition.x - 150) + "px";
+  this.div_.style.left = (pixPosition.x - 126) + "px";
 //  this.div_.style.width = '440px';
 //  this.div_.style.height = '150px';
-  this.div_.style.top = (pixPosition.y - 150) + "px";
+  this.div_.style.top = (pixPosition.y - 85) + "px";
 
 }
 

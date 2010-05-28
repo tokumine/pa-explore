@@ -1,5 +1,5 @@
 body {
-  background-color: #4B7399;
+  background-color: #FFFFFF;
   font-family: Verdana, Helvetica, Arial;
   font-size: 14px;
 }
@@ -25,10 +25,15 @@ a:hover {
 #container {
   width: 75%;
   margin: 0 auto;
-  background-color: #FFF;
+  background-color: #333333;
   padding: 20px 40px;
   border: solid 1px black;
   margin-top: 20px;
+}
+
+#container h1{
+	font:normal 26px Junction;
+	color:#FFFFFF;
 }
 
 #flash_notice, #flash_error {
@@ -88,11 +93,17 @@ a:hover {
 #user_nav {
   float: right;
   font-size: 12px;
+  font-family:Junction;
+  font-color:#FFFFFF;
 }
 
+label {color:#FFFFFF;}
+
+#user_nav a {color:#FFFFFF; font:normal 12px Junction; letter-spacing:1.0px;}
 /* ------------- WEB STYLESHEETS -------- */
 
-body,div,ul,li,ol,h1,h2,h3,h4,h5,h6,form,fieldset,p{margin:0; padding:0; font-weight:normal}
+body,div,ul,li,ol,h1,h2,h3,h4,h5,h6,form,fieldset,p{margin:0; padding:0; font-weight:normal;}
+body {overflow:hidden; background:white;}
 img,fieldset{border:none; padding:0; margin:0;}
 span.clear{clear:both;}
 div.left{float:left; width:auto;}
@@ -125,7 +136,7 @@ div.left_container {position:absolute; top:0; left:0; width:256px; margin:0; pad
 div#right_container {position:absolute; top:0; left:0px; width:87%; margin:0; padding:0; z-index:800; height:100%; background-color:black; overflow:hidden; display:none;}
 
 /* ---------------LEFT CONTAINER----------------- */
-div#map_canvas {position:absolute; top:0; left:220px; margin:0 0 0 0; width:87%; height:100%; overflow:hidden;}
+div#map_canvas {position:relative; float:left; margin:0 0 0 220px; height:1000px; width:1000px;}
 
 div.left_container p {font-family:Geneva;}
 div.left_container div.header {float:left; width:220px; height:95px; background-color:#000000;}

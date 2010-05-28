@@ -78,6 +78,11 @@ $(document).ready(function() {
 							$('div.left_column ul li').css('background','url(../images/li_bkg_profile.png) repeat-y 0 0');
 						}
 					});
+		
+		// $('#slider').css('-webkit-animation-name','bounce');
+		// 		$('#slider').css('-webkit-animation-duration','1s');
+
+		
 	}
 	
 	
@@ -90,18 +95,20 @@ $(document).ready(function() {
 		
 		$('div.left_column ul li').css('background','#232323');
 		
+		
+		
 		$("#slider").animate(
-			{ left: 300 }, 
-			{ duration: 300,
-		    specialEasing: 'easeOutElastic'
-		}).animate(
-					{ left: -588 }, 
-					{ duration: 200,
-				    specialEasing: 'easeOutBounce',
-						complete: function() {
-
-						}
-			 });
+				{ left: 300 }, 
+				{ duration: 300,
+			    specialEasing: 'easeOutElastic'
+			}).animate(
+						{ left: -588 }, 
+						{ duration: 200,
+					    specialEasing: 'easeOutBounce',
+							complete: function() {
+		
+							}
+				 });
 	}
 	
 	
