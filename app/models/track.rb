@@ -15,6 +15,7 @@ class Track < ActiveRecord::Base
     @x_range = 24
     @y_range = 36
 
+  
         
     #1 Choose a random starting point    
     x ||= rand(@x_range) + @x_min #FOR TESTING - REPLACE WITH rand(@axis_max) later
