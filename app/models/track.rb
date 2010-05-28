@@ -25,10 +25,10 @@ class Track < ActiveRecord::Base
     APP_CONFIG[:cells_per_track].times do 
       cell = Cell.find_or_create_by_x_and_y_and_z(63520,y,17)
       classifications.create(:cell => cell, :x => cell.x, :y => cell.y, :z => cell.z)      
-      y -=1
+      y +=1
     end
     
-    #explorer = Explorer.new
+    #explorer = Explorer.new :x => 63520, :y => 51220, :z => 17
     #explorer.explore                    
   end
   
