@@ -266,15 +266,12 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 			 trackData = result;
 				
 			 //map.setCenter(getCellLatLngCenter(trackData[0].z,trackData[0].x,trackData[0].y));
-	     //hideLoading();
+	     	//hideLoading();
 			 setTimeout('map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)))',1000);
 			setTimeout('map.overlayMapTypes.insertAt(0, new FillMap(new google.maps.Size(256, 256)))',1000);
 	   }
 	 });
 	}
-	
-	
-	
 	
 	
 	function FillMap(tileSize) {

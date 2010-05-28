@@ -50,7 +50,7 @@ InfoWindow.prototype.onAdd = function() {
 	                },
 	                function(ev){
 	                        $(this).css('background-position','0px 0px');
-	             		});
+             		});
 	
 	div_content.appendChild(arrow_up);
   
