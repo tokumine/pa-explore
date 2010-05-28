@@ -1,3 +1,6 @@
+var position = 0;
+
+
 InfoWindow.prototype = new google.maps.OverlayView();
 
 
@@ -36,8 +39,8 @@ InfoWindow.prototype.onAdd = function() {
 	div.appendChild(div_content);
 	
 	var arrow_up = document.createElement('a');
-  	arrow_up.style.border = "none";
-  	arrow_up.style.borderWidth = "0px";
+  arrow_up.style.border = "none";
+  arrow_up.style.borderWidth = "0px";
 	arrow_up.style.position = "absolute"
 	arrow_up.style.top = "20px";
 	arrow_up.style.left = "20px";
@@ -47,11 +50,10 @@ InfoWindow.prototype.onAdd = function() {
 	arrow_up.style.background = "url(../images/upArrow.png) no-repeat 0 0";
 
 	$(arrow_up).hover(function(ev){
-	                        $(this).css('background-position','0 -12px');
-	                },
-	                function(ev){
-	                        $(this).css('background-position','0px 0px');
-             		});
+		$(this).css('background-position','0 -12px');
+	}, function(ev){
+				$(this).css('background-position','0px 0px');
+  });
 	
 	div_content.appendChild(arrow_up);
   
@@ -140,19 +142,19 @@ InfoWindow.prototype.onAdd = function() {
 		
 		
 	var title = document.createElement('h3');
-  		title.style.border = "none";
-		title.style.borderWidth = "0px";
-		title.style.position = "absolute";
-		title.style.top = "20px";
-		title.style.right = "0";
-		title.style.font = "normal 21px Junction";
-		title.style.color = "#FFFFFF";
-		$(title).text("Are there signs of any human activity?");
-		$(title).css('line-height','25px');
-		$(title).css('text-shadow','black 0 1px -2px');
-		title.style.width = '220px';
-		title.style.height = '51px';
-		div_content.appendChild(title);
+  title.style.border = "none";
+	title.style.borderWidth = "0px";
+	title.style.position = "absolute";
+	title.style.top = "20px";
+	title.style.right = "0";
+	title.style.font = "normal 21px Junction";
+	title.style.color = "#FFFFFF";
+	$(title).text("Are there signs of any human activity?");
+	$(title).css('line-height','25px');
+	$(title).css('text-shadow','black 0 1px -2px');
+	title.style.width = '220px';
+	title.style.height = '51px';
+	div_content.appendChild(title);
 	
 	var view_map = document.createElement('a');
 	$(view_map).css('text-decoration','underline');
@@ -252,15 +254,13 @@ InfoWindow.prototype.toggle = function() {
   }
 }
 
-InfoWindow.prototype.moveTo = function(latlng) {
-  this.latlng_ = latlng;
+
+
+InfoWindow.prototype.moveNextCell = function (yes) {
+	
 }
 
 
-InfoWindow.prototype.toggleDOM = function() {
-  if (this.getMap()) {
-    this.setMap(null);
-  } else {
-    this.setMap(this.map_);
-  }
+InfoWindow.prototype.movePreviousCell = function () {
+	
 }
