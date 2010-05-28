@@ -3,15 +3,9 @@ var projection;
 var MERCATOR_RANGE = 256;
 var infowindow;
 var trackData = [];
-// [
-//     {x:63517,y:51217,z:17,surprise:false; id:1000},
-//     {x:63517,y:51218,z:17,surprise:false; id:2000},
-//     {x:63517,y:51219,z:17,surprise:false; id:3000},
-//     {x:63517,y:51220,z:17,surprise:false; id:4000},
-//     {x:63518,y:51220,z:17,surprise:false; id:5000},
-//     {x:63519,y:51220,z:17,surprise:false; id:6000},
-//     {x:63520,y:51220,z:17,surprise:false; id:7000}
-// ];
+var stripes1;
+var stripes2;
+var stripes3;
 
 
 
@@ -115,7 +109,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
    }        
    ctx.stroke();    
 
-    ctx.fillStyle    = '#d6d6d6';
+    ctx.fillStyle    = 'red';
     ctx.font         = 'bold 10px sans-serif'
    	ctx.fillText(zoom + ' / '+coord.x+ ' / '+coord.y, 10, 10);
 
@@ -290,7 +284,6 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 	     G_vmlCanvasManager.initElement(canvas);
 
 	   var id = 'id-' + coord.x + '-' + coord.y + '-' + zoom;
-		 console.log(id);
 
 	   canvas.id = id;
 	   canvas.width = canvas.height = 256;
@@ -307,39 +300,52 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 		   success: function(result){	
 					console.log(result);
 	 			  var context = canvas.getContext("2d");
-
-					var r = Math.floor(Math.random()*256);
-					var g = Math.floor(Math.random()*256);
-					var b = Math.floor(Math.random()*256);
-
-				
+	
 	 			  var cells = 16;
 	 			  var cellsSize = 64;
 				
-				  var stripes1 = new Image();
+				  stripes1 = new Image();
 					stripes1.src = "images/stripes.png";
-					var stripes2 = new Image();
+					stripes2 = new Image();
 				  stripes2.src = "images/stripes_2.png";
-					var stripes3 = new Image();
+					stripes3 = new Image();
 				  stripes3.src = "images/stripes_3.png";
+				
+					var x_coord = Math.ceil(coord.x*4);
+					var y_coord = Math.ceil(coord.y*4);
+					// alert(x_coord);
+					// alert(y_coord);
+				
 				  stripes3.onload = function() {
-		 			 	for (var i = 0; i < 4; i++) {
-		 					for (var j = 0; j<4; j++) {
-								if (i!=3 && j!=3 && j!=1) {
-									context.drawImage(stripes1, (cellsSize*i), (cellsSize*j));
-								} else {
-									if (j==3) {
-										context.drawImage(stripes2, (cellsSize*i), (cellsSize*j));
-									} else {
-										context.drawImage(stripes3, (cellsSize*i), (cellsSize*j));
-									}
-								}
+						var x=0;
+						var y=0;
+		 			 	for (var i = x_coord; i < (x_coord + 4); i++) {
+		 					for (var j = y_coord; j< (y_coord + 4); j++) {	
+								context.drawImage(checkCellType(result,i,j), (cellsSize*x), (cellsSize*y));
+								y = y+1;
 		 					}
+							y = 0;
+							x = x+1;
 		 			  }        
 				  };
+				
 		   }
 		 });
 		return canvas;
 	   
 	 };
+	
+	
+	function checkCellType(data,coord_x,coord_y) {
+		
+		//check if this is the track
+
+		//if not appear in the track choose stripes image
+		for (var i=0; i<data.length; i++) {
+			if (data[i].x==coord_x && data[i].y==coord_y) {
+				return stripes3;
+			}
+		}
+		return stripes1;
+	}
 
