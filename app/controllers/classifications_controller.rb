@@ -1,11 +1,13 @@
 class ClassificationsController < ApplicationController
+  before_filter :require_user, :only => [:index] 
+  
   def update
-    @classification = Classification.find(params[:id])    
-    if @classification.update_attributes(params[:classification]) && !current_user.tracks.include?(@classification.track)
-      flash[:notice] = "Successfully updated classification."
-      redirect_to root_url
+    @classification = Classification.find(params[:id], :include => {:track => :user, :cell})    
+    
+    if @classification.update_attributes(:value => params[:value]) && current_user.tracks.include?(@classification.track)
+      render :json => {:update => true}, :callback => params[:callback]  
     else
-      render :action => 'edit'
+      render :json => {:update => false}, :callback => params[:callback]  
     end
   end
 end

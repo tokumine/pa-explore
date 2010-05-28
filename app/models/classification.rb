@@ -12,7 +12,10 @@ class Classification < ActiveRecord::Base
   end
     
   def update_stats
-    self.track.user.refresh_stats
-    self.cell.update_totals :positive => value
+    if self.last?
+      self.track.user.refresh_stats      
+      self.track.update_attribute :finished_at, Time.now
+    end  
+    self.cell.update_totals self.value
   end  
 end

@@ -24,4 +24,8 @@ class Cell < ActiveRecord::Base
      :negative_count => negative_count,
      :total_count => positive_count + negative_count}
   end
+  
+  def update_totals value
+    value == true ? self.increment! :positive_count : self.increment! :negative_count
+  end
 end

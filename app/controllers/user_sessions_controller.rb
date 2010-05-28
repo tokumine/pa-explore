@@ -7,7 +7,13 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
       flash[:notice] = "Successfully logged in."
-      redirect_to games_url
+      if session[:return_to].blank? 
+        redirect_to games_url
+      else
+        url = session[:return_to]
+        session[:return_to] = nil
+        redirect_to url
+      end  
     else
       render :action => 'new'
     end

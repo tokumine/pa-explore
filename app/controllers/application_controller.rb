@@ -8,12 +8,25 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password
   
-  helper_method :current_user  
+  helper_method :current_user_session, :current_user  
   before_filter :adjust_format_for_apple_requests
 
 
   private
 
+  def require_user 
+    unless current_user 
+      store_location 
+      flash[:notice] = "You must be logged in to access this page" 
+      redirect_to login_path 
+      return false 
+    end 
+  end
+  
+  def store_location
+    session[:return_to] = request.request_uri unless request.xhr?
+  end    
+    
   def current_user_session
     return @current_user_session if defined?(@current_user_session)
     @current_user_session = UserSession.find

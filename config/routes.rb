@@ -1,18 +1,16 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :games
-  
-  map.tiles 'tiles/:x/:y/:z', :controller => "cells", :action => "tiles"
-  
-  map.resources :cells
-  map.resources :classifications
-  map.resources :tracks
   map.root :controller => "main", :action => "index"
-  map.resources :user_sessions
-  map.resources :users
-  # config/routes.rb
+  map.tiles 'tiles/:x/:y/:z', :controller => "cells", :action => "tiles"
   map.login "login", :controller => "user_sessions", :action => "new"
   map.logout "logout", :controller => "user_sessions", :action => "destroy"
 
+  map.resources :games
+  map.resources :cells 
+  map.resources :classifications
+  map.resources :tracks
+  map.resources :user_sessions
+  map.resources :users, :collection => {:rank => :get}
+  
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

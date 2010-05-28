@@ -1,25 +1,27 @@
 class User < ActiveRecord::Base
   acts_as_authentic
   has_many :tracks
+  after_create { User.refresh_rank }
   
   def refresh_stats
     cx = Classifications.count :joins => [:tracks => :users], 
                                :conditions => "value != nil AND user_id = #{self.id}"    
-    meters_explored = cx * APP_CONFIG[:meters_per_cell]
+    self.meters_explored = cx * APP_CONFIG[:meters_per_cell]
     save
-    refresh_rank
+    User.refresh_rank
   end
   
+  #NICE. PG 8.4 RANK
+  def self.refresh_rank
+    User.connection.update "UPDATE users SET rank = u2.rank FROM (SELECT id, meters_explored, rank() OVER(ORDER BY meters_explored DESC) FROM users) as u2 WHERE users.id = u2.id"
+  end
   
-  #do some fancy shit here
-  def refresh_rank
-    self.rank = User.count(:conditions => "meters_explored > #{meters_explored}") + 1
-    above = User.find_by_rank rank+1
-    if meters_explored > above.meters_explored
-      rank = above.
-      above.update_attribute(:rank, above.rank-1) if above.rank > 0
-      save
-    end
-    neighbours = neighbours - self    
+  def game_json current_user
+    {:id => self.id,
+     :username => self.username,
+     :avatar => "http://www.gravatar.com/avatar.php?gravatar_id=#{Digest::MD5.new.update(email)}",
+     :rank => self.rank,
+     :meters_explored => self.meters_explored,
+     :current_user => self == current_user ? true : false}    
   end
 end
