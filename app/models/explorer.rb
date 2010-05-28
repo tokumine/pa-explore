@@ -1,3 +1,4 @@
+#Core movement class
 class Explorer
   attr_accessor :x, :y, :z, :total_cells, :max_axis, :distance
     
@@ -14,26 +15,64 @@ class Explorer
     @max_axis     = 2**@z
     @path         = []    
     @track        = track
-    move    
+    survey    
   end
   
-  def explore
+
+  def explore!
     return if @distance == 0
     move
+    survey
     explore
   end
   
-  def move
-    @current_cell.north
+  # GAME SPACE
+  # . ^ .
+  # < y >
+  # . v .
+  # 
+  # move to the cell with lowest number of surveys (on average)
+  # avoid getting into loops (don't go to a cell where you touch own path)
+  #
+  # . v . . . .   
+  # . v . . . .
+  # . v < < . .
+  # . v . ^ . .
+  # . > > ^ . .
+  #
+  # if cell with nothing, go there first.
+  #
+  def move  
+    cells = Cell.all :conditions => {:x => [@x-1,@x+1], :y => [@y-1,@y+1]}, 
+                     :order => "positive_count + negative_count ASC"
     
+    # if all the cells have already been surveyed, weight index to those with few surveys                 
+    if cells.size == 4
+      i = rand(3)
+      i = (i - (i * 0.3)).floor      
+      @x = cells[i].x
+      @y = cells[i].y
+      return
+    end
+    
+    # if there are empty cells, make a new cell where there's a gap and use that 
+    possible_cells = [[@x+1, @y],[@x-1, @y],[@x, @y+1],[@x, @y-1]] 
+    existing_cells = cells.map {|c| [c.x, c.y]}
+    survey_cell = (possible_cells - existing_cells).first
+    @x = survey_cell[0]
+    @y = survey_cell[1]
   end
   
+  #only survey a cell if you've not been there yet
   def survey
     cell = Cell.find_or_create_by_x_and_y_and_z(@x, @y, @z)
-    @track.classifications.create(:cell => cell, :x => cell.x, :y => cell.y, :z => cell.z)
-  end
-    
-  def location
-    {:x => @x, :y => @y, :z => @z}
-  end
+
+    if !@path.include? cell
+      @track.classifications.create(:cell => cell, :x => cell.x, :y => cell.y, :z => cell.z)
+      @path << cell       
+      @x = cell.x
+      @y = cell.y
+      @distance -= 1
+    end  
+  end    
 end
