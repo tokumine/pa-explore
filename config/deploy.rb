@@ -1,7 +1,7 @@
 set :application, "ppe"
 set :user, "ubuntu"
 set :runner, "ubuntu"
-set :domain, "ppe.tinypla.net"
+set :domain, "stage.vizzuality.com"
 
 default_run_options[:pty] = true
 set :scm, :git

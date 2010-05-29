@@ -9,7 +9,7 @@ class Track < ActiveRecord::Base
   # The Explorer has the following features:
   # 
   # * Remembers path
-  # * No path overlaps
+  # * No current path overlaps
   # * Keeps within world bounds
   # * Prefers unexplored tiles  
   # * avoids getting into dead ends (not implemented)
