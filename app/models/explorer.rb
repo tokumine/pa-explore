@@ -43,11 +43,11 @@ class Explorer
   # if cell with nothing, go there first.
   #
   def move
-    survey_cell = [[@x+1, @y],[@x-1, @y],[@x+1, @y],[@x-1, @y],[@x, @y+1]].rand
-    if !path.include? survey_cell
+    cell = [[@x+1, @y],[@x-1, @y],[@x+1, @y],[@x-1, @y],[@x, @y+1]].rand
+    if !@path.include? cell
       @path << cell
-      @x = survey_cell[0]
-      @y = survey_cell[1]
+      @x = cell[0]
+      @y = cell[1]
       @distance -= 1      
     end  
           
