@@ -42,8 +42,9 @@ class Explorer
   #
   # if cell with nothing, go there first.
   #
-  def move  
-    cells = Cell.all :conditions => {:x => [@x-1,@x+1], :y => [@y-1,@y+1]}, 
+  def move
+      
+    cells = Cell.all :conditions => "(x = #{@x-1} AND y = #{@y}) OR (x = #{@x+1} AND y = #{@y}) OR (x = #{@x} AND y = #{@y-1}) OR (x = #{@x} AND y = #{@y+1})",
                      :order => "positive_count + negative_count ASC"
     
     # if all the cells have already been surveyed, weight index to those with few surveys                 
@@ -58,7 +59,7 @@ class Explorer
     # if there are empty cells, make a new cell where there's a gap and use that 
     possible_cells = [[@x+1, @y],[@x-1, @y],[@x, @y+1],[@x, @y-1]] 
     existing_cells = cells.map {|c| [c.x, c.y]}
-    survey_cell = (possible_cells - existing_cells).first
+    survey_cell = (possible_cells - existing_cells).rand
     @x = survey_cell[0]
     @y = survey_cell[1]
   end
@@ -67,9 +68,9 @@ class Explorer
   def survey
     cell = Cell.find_or_create_by_x_and_y_and_z(@x, @y, @z)
 
-    if !@path.include? cell
+    if @last_move != cell
       @track.classifications.create(:cell => cell, :x => cell.x, :y => cell.y, :z => cell.z)
-      @path << cell       
+      @last_move = cell       
       @x = cell.x
       @y = cell.y
       @distance -= 1
