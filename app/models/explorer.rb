@@ -57,7 +57,7 @@ class Explorer
     end
     
     # if there are empty cells, make a new cell where there's a gap and use that 
-    possible_cells = [[@x+1, @y],[@x-1, @y],[@x, @y+1],[@x, @y-1]] 
+    possible_cells = [[@x+1, @y],[@x-1, @y],[@x, @y-1]] #[@x, @y+1] *<-- ALWAYS GOING DOWN
     existing_cells = cells.map {|c| [c.x, c.y]}
     survey_cell = (possible_cells - existing_cells).rand
     @x = survey_cell[0]
