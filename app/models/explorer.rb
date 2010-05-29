@@ -57,7 +57,7 @@ class Explorer
     #end
     
     # if there are empty cells, make a new cell where there's a gap and use that 
-    survey_cell = [[@x+1, @y],[@x-1, @y],[@x+1, @y],[@x-1, @y],[@x, @y-1]].rand #[@x, @y+1] *<-- ALWAYS GOING DOWN
+    survey_cell = [[@x+1, @y],[@x-1, @y],[@x+1, @y],[@x-1, @y],[@x, @y+1]].rand #[@x, @y-1] *<-- ALWAYS GOING DOWN
     #existing_cells = cells.map {|c| [c.x, c.y]}
     #survey_cell = (possible_cells - existing_cells).rand
     @x = survey_cell[0]
@@ -68,9 +68,9 @@ class Explorer
   def survey
     cell = Cell.find_or_create_by_x_and_y_and_z(@x, @y, @z)
 
-    if @last_move != cell
+    if !@path.include? cell
       @track.classifications.create(:cell => cell, :x => cell.x, :y => cell.y, :z => cell.z)
-      @last_move = cell       
+      @path << cell       
       @x = cell.x
       @y = cell.y
       @distance -= 1
