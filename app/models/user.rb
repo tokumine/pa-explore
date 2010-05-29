@@ -18,12 +18,15 @@ class User < ActiveRecord::Base
   
   def game_json current_user
     
+    md = self.meters_explored - current_user.meters_explored    
+    md = md > 0 ? "+#{md}" : "-#{md}"
+    
     {:id => self.id,
      :username => self.username,
      :avatar => "http://www.gravatar.com/avatar.php?gravatar_id=#{Digest::MD5.new.update(email)}",
      :rank => self.rank,
      :meters_explored => self.meters_explored,
-     :meters_different => self.meters_explored - current_user.meters_explored,
+     :meters_different => md,
      :current_user => self == current_user ? true : false}    
   end
 end
