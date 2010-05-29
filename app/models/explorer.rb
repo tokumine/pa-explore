@@ -43,7 +43,7 @@ class Explorer
   # if cell with nothing, go there first.
   #
   def move
-    cell = [[@x+1, @y],[@x-1, @y],[@x+1, @y],[@x-1, @y],[@x, @y+1]].rand
+    cell = [[@x+1, @y],[@x-1, @y],[@x, @y+1],[@x, @y+1]].rand
     if !@path.include? cell
       @path << cell
       @x = cell[0]
