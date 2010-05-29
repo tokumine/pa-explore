@@ -43,7 +43,14 @@ class Explorer
   # if cell with nothing, go there first.
   #
   def move
-      
+    survey_cell = [[@x+1, @y],[@x-1, @y],[@x+1, @y],[@x-1, @y],[@x, @y+1]].rand
+    if !path.include? survey_cell
+      @path << cell
+      @x = survey_cell[0]
+      @y = survey_cell[1]
+      @distance -= 1      
+    end  
+          
     #cells = Cell.all :conditions => "(x = #{@x-1} AND y = #{@y}) OR (x = #{@x+1} AND y = #{@y}) OR (x = #{@x} AND y = #{@y-1}) OR (x = #{@x} AND y = #{@y+1})",
     #                 :order => "positive_count + negative_count ASC"
     
@@ -57,23 +64,14 @@ class Explorer
     #end
     
     # if there are empty cells, make a new cell where there's a gap and use that 
-    survey_cell = [[@x+1, @y],[@x-1, @y],[@x+1, @y],[@x-1, @y],[@x, @y+1]].rand #[@x, @y-1] *<-- ALWAYS GOING DOWN
+ #[@x, @y-1] *<-- ALWAYS GOING DOWN
     #existing_cells = cells.map {|c| [c.x, c.y]}
     #survey_cell = (possible_cells - existing_cells).rand
-    @x = survey_cell[0]
-    @y = survey_cell[1]
   end
   
-  #only survey a cell if you've not been there yet
+  #survey a cell
   def survey
     cell = Cell.find_or_create_by_x_and_y_and_z(@x, @y, @z)
-
-    if !@path.include? cell
-      @track.classifications.create(:cell => cell, :x => cell.x, :y => cell.y, :z => cell.z)
-      @path << cell       
-      @x = cell.x
-      @y = cell.y
-      @distance -= 1
-    end  
+    @track.classifications.create(:cell => cell, :x => cell.x, :y => cell.y, :z => cell.z)
   end    
 end

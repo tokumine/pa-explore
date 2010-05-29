@@ -9,11 +9,11 @@ class Track < ActiveRecord::Base
   # The Explorer has the following features:
   # 
   # * Remembers path
-  # * No current path overlaps
-  # * Keeps within world bounds
-  # * Prefers unexplored tiles  
-  # * avoids getting into dead ends (not implemented)
-  # * Starting position *has* to be an unexplored tile? (not implemented)
+  # * No current path overlaps (currently does not go north)
+  # * Keeps within world bounds (unimplemented)
+  # * Prefers unexplored tiles (unimplemented)  
+  # * avoids getting into dead ends (naive walker, so not a prob)
+  # * Starting position *has* to be an unexplored tile? (unimplemented)
   def generate_track (x=nil, y=nil)    
 
     # Can set starting location by passing {:x => x, :y => y, :z => z} hash
