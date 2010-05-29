@@ -17,7 +17,9 @@ class Track < ActiveRecord::Base
   def generate_track (x=nil, y=nil)    
 
     # Can set starting location by passing {:x => x, :y => y, :z => z} hash
-    explorer = Explorer.new self, :x => 63520, :y => 51220, :z => 17
+    x = (63520..63600).rand
+    y = (51220..51300).rand
+    explorer = Explorer.new self, :x => x, :y => y, :z => 17
     explorer.explore!                    
   end
   
