@@ -50,7 +50,7 @@ class Explorer
     # if all the cells have already been surveyed, weight index to those with few surveys                 
     if cells.size == 4
       i = rand(3)
-      i = (i - (i * 0.3)).floor      
+      i = (i - (i * 0.2)).floor      
       @x = cells[i].x
       @y = cells[i].y
       return
@@ -63,14 +63,19 @@ class Explorer
     @x = survey_cell[0]
     @y = survey_cell[1]
   end
+
+  #If there are enough moves left
+  def enough_moves_left
+    
+  end
   
   #only survey a cell if you've not been there yet
   def survey
     cell = Cell.find_or_create_by_x_and_y_and_z(@x, @y, @z)
 
-    if @last_move != cell
+    if !@path.include? cell
       @track.classifications.create(:cell => cell, :x => cell.x, :y => cell.y, :z => cell.z)
-      @last_move = cell       
+      @path << cell       
       @x = cell.x
       @y = cell.y
       @distance -= 1
