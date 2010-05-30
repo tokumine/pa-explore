@@ -239,8 +239,6 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
    map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
    projection = new MercatorProjection();
 
-	 infowindow = new InfoWindow(myLatlng, map);
-
 
    google.maps.event.addListener(map, "zoom_changed", function() {
        map.setZoom(15);
@@ -257,18 +255,26 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 	   type: "POST",
 	   url: "/tracks",
 	   success: function(result){
-			 trackData = result;
+				var globalMaptile = new GlobalMercator();
+			 	trackData = result;
+				console.log(trackData);
+				var obj = globalMaptile.TileLatLonBounds(trackData[0].x,(Math.pow(2,17)-trackData[0].y),17);
+				var latlngbounds = new google.maps.LatLngBounds();
+				latlngbounds.extend(new google.maps.LatLng(obj[0],obj[1]));
+				latlngbounds.extend(new google.maps.LatLng(obj[2],obj[3]));
 				
-			 //map.setCenter(getCellLatLngCenter(trackData[0].z,trackData[0].x,trackData[0].y));
-	     // hideLoading();
-			// var marker = new google.maps.Marker({
-			//         position: myLatlng, 
-			//         map: map,
-			//         title:"Hello World!"
-			//     });
+			 	map.setCenter(latlngbounds.getCenter());
+	    	hideLoading();
+				//infowindow = new InfoWindow(latlngbounds.getCenter(), map, trackData);
 
-			 setTimeout('map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)))',1000);
-			 setTimeout('map.overlayMapTypes.insertAt(0, new FillMap(new google.maps.Size(256, 256)))',1000);
+				var marker = new google.maps.Marker({
+				        position: latlngbounds.getCenter(), 
+				        map: map,
+				        title:"Hello World!"
+				    });
+				
+			 	setTimeout('map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)))',1000);
+			 	setTimeout('map.overlayMapTypes.insertAt(0, new FillMap(new google.maps.Size(256, 256)))',1000);
 	   }
 	 });
 	}
