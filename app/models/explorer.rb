@@ -1,18 +1,23 @@
 #Core movement class
+
 class Explorer
   attr_accessor :x, :y, :z, :total_cells, :max_axis, :distance
+
+  class Loc < Hashie::Dash
+    property :x
+    property :y
+    property :z, :default => 17
+  end
     
   def initialize track, opts = {}
     opts.reverse_merge! :z => 17
     opts.reverse_merge! :x => rand(2**opts[:z]), 
                         :y => rand(2**opts[:z]), 
                         :distance => APP_CONFIG[:cells_per_track]
-    @x            = opts[:x]
-    @y            = opts[:y]
-    @z            = opts[:z]
+    @loc          = Loc.new :x => opts[:x], :y => opts[:y], :z => opts[:z]
     @distance     = opts[:distance]    
-    @total_cells  = (2**@z)**2
-    @max_axis     = 2**@z
+    @total_cells  = (2**@loc.z)**2
+    @max_axis     = 2**@loc.z
     @path         = []    
     @track        = track
     survey    
@@ -43,16 +48,18 @@ class Explorer
   # if cell with nothing, go there first.
   #
   def move
-    #Choose a random cell
-    cell = [[@x+1, @y],[@x-1, @y],[@x, @y+1],[@x, @y+1]].rand
+    # Choose a random cell
+    # JAVI: Extend this part of the method to chose cell with lower number of surveys (on average)
+    cell = cells_around(@loc).rand
     
-    #If the cell is in path, or if cell touches path, no move.
-    must_not_be_in_path_cells = [[cell[0]+1,cell[1]], [cell[0]-1,cell[1]], [cell[0],cell[1]+1], [cell[0],cell[1]-1], cell]
+    # If new cell is in path, or if touches path aside from current cell, no move.
+    # This prevents the explorer from getting in to a dead end
+    # And also helps to generates straighish tracks
+    bad_path = cells_around(cell, :include_self => true) - [@loc] #<-- it's ok to touch current cell      
         
-    if (@path - must_not_be_in_path_cells).empty?
+    if (bad_path - @path) == bad_path
       @path << cell
-      @x = cell[0]
-      @y = cell[1]
+      @loc = cell
       @distance -= 1      
     end  
           
@@ -74,9 +81,26 @@ class Explorer
     #survey_cell = (possible_cells - existing_cells).rand
   end
   
+  
   #survey a cell
   def survey
-    cell = Cell.find_or_create_by_x_and_y_and_z(@x, @y, @z)
+    cell = Cell.find_or_create_by_x_and_y_and_z(@loc.x, @loc.y, @loc.z)
     @track.classifications.create(:cell => cell, :x => cell.x, :y => cell.y, :z => cell.z)
   end    
+ 
+  
+  # HELPER generate array of surrounding cells
+  def cells_around cell, opts = {}
+    opts.reverse_merge! :include_self => false
+    
+    ca = [Loc.new(:x => cell.x+1, :y => cell.y),
+          Loc.new(:x => cell.x-1, :y => cell.y),
+          Loc.new(:x => cell.x, :y => cell.y+1),
+          Loc.new(:x => cell.x, :y => cell.y-1)]
+    
+    # add self if requested
+    ca << cell if opts[:include_self]
+        
+    ca
+  end  
 end
