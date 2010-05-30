@@ -1,21 +1,24 @@
-var position = 0;
 
 
 InfoWindow.prototype = new google.maps.OverlayView();
 
 
-function InfoWindow(latlng, map) {
+function InfoWindow(latlng, map, track) {
 	
-console.log(latlng);
+	this.position = 1;
+	this.track_length = track.length;
+	this.max_position = 1;
+	
   this.latlng_ = latlng;
   this.map_ = map;
-
   this.div_ = null;
   this.setMap(map);
 }
 
 InfoWindow.prototype.onAdd = function() {
 
+	var me = this;
+	
 	var div = document.createElement('DIV.INFO_WINDOW');
 	div.style.border = "none";
 	div.style.borderWidth = "0px";
@@ -44,7 +47,7 @@ InfoWindow.prototype.onAdd = function() {
 	arrow_up.style.position = "absolute"
 	arrow_up.style.top = "20px";
 	arrow_up.style.left = "20px";
-
+	arrow_up.style.cursor = 'pointer';
 	arrow_up.style.width = '12px';
 	arrow_up.style.height = '12px';
 	arrow_up.style.background = "url(../images/upArrow.png) no-repeat 0 0";
@@ -59,6 +62,7 @@ InfoWindow.prototype.onAdd = function() {
   
 	
 	var current_step = document.createElement('p');
+	$(current_step).addClass('current_step');
 	current_step.style.font = "normal 11px Junction";
 	current_step.style.color = "#5A5A5A";
 	current_step.style.position = "absolute";
@@ -66,7 +70,7 @@ InfoWindow.prototype.onAdd = function() {
 	current_step.style.left = "21px";
 	$(current_step).css('line-height','15px');
 	current_step.width = '30px';
-	$(current_step).text("12");
+	$(current_step).text("1");
 	div_content.appendChild(current_step);
 
 	var of_text = document.createElement('p');
@@ -88,34 +92,32 @@ InfoWindow.prototype.onAdd = function() {
 	total_steps.style.left = "21px";
 	$(total_steps).css('line-height','15px');
 	total_steps.width = '30px';
-	$(total_steps).text("21");
+	$(total_steps).text(this.track_length);
 	div_content.appendChild(total_steps);
 	
 	var arrow_down = document.createElement('a');
-  	arrow_down.style.border = "none";
-  	arrow_down.style.borderWidth = "0px";
+  arrow_down.style.border = "none";
+  arrow_down.style.borderWidth = "0px";
 	arrow_down.style.position = "absolute"
 	arrow_down.style.bottom = "20px";
+	arrow_down.style.cursor = 'pointer';
 	arrow_down.style.left = "20px";
-
 	arrow_down.style.width = '12px';
-	arrow_down.style.height = '12px';	arrow_down.style.background = "url(../images/downArrow.png) no-repeat 0 0";
+	arrow_down.style.height = '12px';
+	arrow_down.style.background = "url(../images/downArrow.png) no-repeat 0 0";
 	
 	$(arrow_down).hover(function(ev){
-	                        $(this).css('background-position','0 -12px');
-	                },
-	                function(ev){
-	                        $(this).css('background-position','0px 0px');
-	             		});
+	   $(this).css('background-position','0 -12px');
+	},function(ev){
+	   $(this).css('background-position','0px 0px');
+	});
 	
+
 	
 	div_content.appendChild(arrow_down);
 	
 	var image_static_layer = document.createElement('img');
-	
-	var url_static_image = 'http://maps.google.com/staticmap?center='+this.latlng_.b+','+this.latlng_.c+'&zoom=15&size=150x150&sensor=false&key=ABQIAAAAsIunaSEq-72JsQD5i92_2RSBAjOOhu3AGseSip9oOKv69lUsGxQJJZ1BfzmSIDX0FfGUGpci0uokE&maptype=satellite';
-	
-	image_static_layer.setAttribute('src', url_static_image);
+	image_static_layer.setAttribute('src', this.getStaticImage());
 	image_static_layer.setAttribute('alt', 'Map discovered');
 	image_static_layer.setAttribute('height', '150px');
 	image_static_layer.setAttribute('width', '150px');
@@ -178,17 +180,20 @@ InfoWindow.prototype.onAdd = function() {
 	yes.style.bottom = "15px";
 	yes.style.right = "15px";
 	yes.style.width = '64px';
+	yes.style.cursor = 'pointer';
 	yes.style.height = '35px';
 	yes.style.background = "url(../images/yes.png) no-repeat 0 0";
 	div_content.appendChild(yes);
-
-	$(yes).bind('touchmove touchcancel touchend',function(ev){
-		$(this).css('background-position','0 -0');
-	});
-
-	$(yes).bind('touchstart',function(ev){
+	$(yes).hover(function(ev){
 		$(this).css('background-position','0 -37px');
+	},
+		function(ev){
+		$(this).css('background-position','0 0');
 	});
+	
+	$(yes).click(function(ev){
+		me.moveInfoWindow();
+	});	
 	
 	
   var no = document.createElement('a');
@@ -198,16 +203,19 @@ InfoWindow.prototype.onAdd = function() {
 	no.style.bottom = "15px";
 	no.style.right = "80px";
 	no.style.width = '64px';
+	no.style.cursor = 'pointer';
 	no.style.height = '35px';
 	no.style.background = "url(../images/no.png) no-repeat 0 0";
 	div_content.appendChild(no);
-	
-	$(no).bind('touchmove touchcancel touchend',function(ev){
-		$(this).css('background-position','0 -0');
+	$(no).hover(function(ev){
+		$(this).css('background-position','0 -38px');
+	},
+		function(ev){
+		$(this).css('background-position','0 0');
 	});
 
-	$(no).bind('touchstart',function(ev){
-		$(this).css('background-position','0 -38px');
+	$(no).click(function(ev){
+		me.moveInfoWindow();
 	});
 
   this.div_ = div;
@@ -222,8 +230,6 @@ InfoWindow.prototype.draw = function() {
   if (!pixPosition) return;
 
   this.div_.style.left = (pixPosition.x - 126) + "px";
-//  this.div_.style.width = '440px';
-//  this.div_.style.height = '150px';
   this.div_.style.top = (pixPosition.y - 85) + "px";
 
 }
@@ -232,35 +238,35 @@ InfoWindow.prototype.onRemove = function() {
   this.div_.parentNode.removeChild(this.div_);
 }
 
-InfoWindow.prototype.hide = function() {
-  if (this.div_) {
-    this.div_.style.visibility = "hidden";
-  }
-}
-
-InfoWindow.prototype.show = function() {
-  if (this.div_) {
-    this.div_.style.visibility = "visible";0
-  }
-}
-
-InfoWindow.prototype.toggle = function() {
-  if (this.div_) {
-    if (this.div_.style.visibility == "hidden") {
-      this.show();
-    } else {
-      this.hide();
-    }
-  }
+InfoWindow.prototype.getStaticImage = function() {
+	return 'http://maps.google.com/staticmap?center='+this.latlng_.b+','+this.latlng_.c+'&zoom=15&size=150x150&sensor=false&key=ABQIAAAAsIunaSEq-72JsQD5i92_2RSBAjOOhu3AGseSip9oOKv69lUsGxQJJZ1BfzmSIDX0FfGUGpci0uokE&maptype=satellite';
 }
 
 
 
-InfoWindow.prototype.moveNextCell = function (yes) {
+InfoWindow.prototype.moveInfoWindow = function() {
+	//execute request yes/no TODO
+	//change the max position if it needs
+	if (this.position == this.max_position) {
+		this.max_position = this.max_position + 1;
+	}
+	
+	if (this.position==this.track_length) {
+		alert('You have finished the game!!');
+		return;
+	} else {
+		this.position = this.position + 1;
+	}
+	
+	//change the step and move infowindow
+	$(this.div_).children('div').children('p.current_step').text(this.position);
+	this.latlng_ = this.getCoords();
 	
 }
 
 
-InfoWindow.prototype.movePreviousCell = function () {
-	
+InfoWindow.prototype.getCoords = function() {
+	console.log(this.latlng_);
+ 	return new google.maps.LatLng(this.latlng_.lat()-0.5,this.latlng_.lng()-0.5);
 }
+

@@ -1,3 +1,5 @@
+<% title "Protected Area Explore Tool"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 	<head lang="en" xml:lang="en"> 
@@ -10,6 +12,7 @@
 		
 		<%= javascript_include_tag 'http://maps.google.com/maps/api/js?sensor=false&key=ABQIAAAAsIunaSEq-72JsQD5i92_2RSBAjOOhu3AGseSip9oOKv69lUsGxQJJZ1BfzmSIDX0FfGUGpci0uokE' %>
 		<%= javascript_include_tag 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js' %>
+		<%= javascript_include_tag 'GlobalMapTiles' %>
 		<%= javascript_include_tag 'InfoWindow' %>
 		<%= javascript_include_tag 'application' %>
 		<%= javascript_include_tag 'map' %>
@@ -19,242 +22,95 @@
 	<body onload="initialize()">
 		<div id="layout">
 			
-			<div class="left_container">
+			<div class="left_column">
+				<header>
+					<h1>Protected Area<br/>
+					<strong>Explorer</strong></h1>					
+				</header>
+				<ul id="main_list"></ul>
+			</div>
+			
+			<div class="profile" id="slider">
 				<div class="header">
-					<p class="protected_area">Protected Area</p>
-					<p class="explorer">Explorer</p>					
-				</div>
-				<div class="rank">
 					<ul>
-						<li class="other_user">
-							<div class="image">
-								<%= image_tag("gravatar.jpg", :alt => "Barroso avatar") %>
-							</div>
-							
-							<div class="data">
-								<div class="user">
-									<p class="username">jmedina</p>
-									<p class="rank">(1th)</p>
-								</div>
-								<div class="distance">
-									<p class="amount">0003127m</p>
-									<p class="difference positive">(+1231m)</p>
-								</div>
-							</div>
-						</li>
-						<li class="other_user">
-							<div class="image">
-								<%= image_tag("gravatar.jpg", :alt => "Barroso avatar") %>
-							</div>
-							<div class="data">
-								<div class="user">
-									<p class="username">jmedina</p>
-									<p class="rank">(1th)</p>
-								</div>
-								<div class="distance">
-									<p class="amount">0003127m</p>
-									<p class="difference positive">(+1231m)</p>
-								</div>
-							</div>
-						</li>
-						<li class="other_user">
-							<div class="image">
-								<%= image_tag("gravatar.jpg", :alt => "Barroso avatar") %>
-							</div>
-							<div class="data">
-								<div class="user">
-									<p class="username">jmedina</p>
-									<p class="rank">(1th)</p>
-								</div>
-								<div class="distance">
-									<p class="amount">0003127m</p>
-									<p class="difference positive">(+1231m)</p>
-								</div>
-							</div>
-						</li>
-						<li class="other_user">
-							<div class="image">
-								<%= image_tag("gravatar.jpg", :alt => "Barroso avatar") %>
-							</div>
-							<div class="data">
-								<div class="user">
-									<p class="username">jmedina</p>
-									<p class="rank">(1th)</p>
-								</div>
-								<div class="distance">
-									<p class="amount">0003127m</p>
-									<p class="difference positive">(+1231m)</p>
-								</div>
-							</div>
-						</li>
-						
-						<li class="user">
-							<div class="data shadow">
-								<div class="image">
-									<%= image_tag("gravatar_big.jpg", :alt => "Barroso avatar") %>
-								</div>
-								<div class="user">
-									<p class="username">tokumine</p>
-									<p class="rank">(1th)</p>
-								</div>
-								<div class="distance">
-									<ul class="amount">
-										<li><p>0</p></li>
-										<li><p>0</p></li>
-										<li><p>3</p></li>
-										<li><p>1</p></li>
-										<li><p>2</p></li>
-										<li><p>7</p></li>
-										<li class="message">Meters Done</li>
-									</ul>
-
-								</div>
-							</div>
-							<div class="buttons">
-								<a class="view_ranking"></a>
-								<a class="user_profile" id="showRanking"></a>
-								<a class="go_back"></a>
-							</div>
-						</li>
-						<li class="other_user">
-							<div class="image">
-								<%= image_tag("gravatar.jpg", :alt => "Barroso avatar") %>
-							</div>
-							<div class="data">
-								<div class="user">
-									<p class="username">jmedina</p>
-									<p class="rank">(1th)</p>
-								</div>
-								<div class="distance">
-									<p class="amount">0003127m</p>
-									<p class="difference negative">(-1231m)</p>
-								</div>
-							</div>
-						</li>
-						<li class="other_user">
-							<div class="image">
-								<%= image_tag("gravatar.jpg", :alt => "Barroso avatar") %>
-							</div>
-							<div class="data">
-								<div class="user">
-									<p class="username">jmedina</p>
-									<p class="rank">(1th)</p>
-								</div>
-								<div class="distance">
-									<p class="amount">0003127m</p>
-									<p class="difference negative">(-1231m)</p>
-								</div>
-							</div>
-						</li>
-						<li class="other_user">
-							<div class="image">
-								<%= image_tag("gravatar.jpg", :alt => "Barroso avatar") %>
-							</div>
-							<div class="data">
-								<div class="user">
-									<p class="username">jmedina</p>
-									<p class="rank">(1th)</p>
-								</div>
-								<div class="distance">
-									<p class="amount">0003127m</p>
-									<p class="difference negative">(-1231m)</p>
-								</div>
-							</div>
-						</li>
-						
-						<li class="last other_user">
-							<div class="image">
-								<%= image_tag("gravatar.jpg", :alt => "Barroso avatar") %>
-							</div>
-							<div class="data">
-								<div class="user">
-									<p class="username">jmedina</p>
-									<p class="rank">(1th)</p>
-								</div>
-								<div class="distance">
-									<p class="amount">0003127m</p>
-									<p class="difference negative">(-1231m)</p>
-								</div>
-							</div>
-						</li>
-						
+						<li class="selected">your feed</li>
+						<li>your badges</li>
+						<li>account settings</li>
 					</ul>
 				</div>
-			</div>
-			<div id="right_container">
-					<div class="profile">
-						
-							<ul class="options">
-								<li class="active"><a class="menu" href="#your_feed" id="your_feed">your feed</a></li>
-								<li><a class="menu" href="#your_badges" id="your_badges">your badges</a></li>
-								<li><a class="menu" href="#account_settings" id="account_settings">account settings</a></li>
-							</ul>
-							<div class="information">								
-								<div class="feed">
-									<ul>
-										<li class="first">
-											<p class="message founded">You have found a new endtangered species, <span class="time_ago">4 mins ago</span></p>
-											<%= image_tag("panda.png", :alt => "Panda") %>
-											<div class="text">
-												<p class="award">Giant Panda</p>
-												<a class="learn_more" href="#">learn more at eol.org</a> 
-											</div>
-										</li>
-										<li>
-											<p class="message">You have found a new endtangered species, <span class="time_ago">4 mins ago</span></p>
-											<%= image_tag("eagle.png", :alt => "Eagle") %>
-											<div class="text">
-												<p class="award">Giant Panda</p>
-												<a class="learn_more" href="#">learn more at eol.org</a> 
-											</div>
-										</li>
-										<li>
-											<p class="message">You have found a new endtangered species, <span class="time_ago">4 mins ago</span></p>
-											<%= image_tag("eagle.png", :alt => "Eagle") %>
-											<div class="text">
-												<p class="award">Giant Panda</p>
-												<a class="learn_more" href="#">learn more at eol.org</a> 
-											</div>
-										</li>
-										<li>
-											<p class="message founded">You have found a new endtangered species, <span class="time_ago">4 mins ago</span></p>
-											<%= image_tag("eagle.png", :alt => "Eagle") %>
-											<div class="text">
-												<p class="award">Giant Panda</p>
-												<a class="learn_more" href="#">learn more at eol.org</a> 
-											</div>
-										</li>
 
-										<li>
-											<p class="message">You have found a new endtangered species, <span class="time_ago">4 mins ago</span></p>
-											<%= image_tag("eagle.png", :alt => "Eagle") %>
-											<div class="text">
-												<p class="award">Giant Panda</p>
-												<a class="learn_more" href="#">learn more at eol.org</a> 
-											</div>
-										</li>
-
-										<li class="last">
-											<p class="message">You have found a new endtangered species, <span class="time_ago">4 mins ago</span></p>
-											<%= image_tag("eagle.png", :alt => "Eagle") %>
-											<div class="text">
-												<p class="award">Giant Panda</p>
-												<a class="learn_more" href="#">learn more at eol.org</a> 
-											</div>
-										</li>
-									</ul>
-																																																				
-								</div>
-								<div class="badges">Phasellus mattis tincidunt nibh. Cras orci urna, blandit id, pretium vel, aliquet ornare, felis. Maecenas scelerisque sem non nisl. Fusce sed lorem in enim dictum bibendum.</div>
-								<div class="account_settings">Nam dui erat, auctor a, dignissim quis, sollicitudin eu, felis. Pellentesque nisi urna, interdum eget, sagittis et, consequat vestibulum, lacus. Mauris porttitor ullamcorper augue.</div>
-								
+				<div class="feed_container">
+					<ul>
+						<li class="first">
+							<h3>You have found a new endangered species, <strong>4 mins ago</strong></h3>
+							<div class="image">
+								<%= image_tag("panda.png", :alt => "Panda") %>
 							</div>
-
-					</div>
+							<div class="information">
+								<p class="kind">Giant Pandas</p>
+								<p class="learn">learn more at eol.org</p>
+							</div>
+						</li>
+						<li>
+							<h3 class="green">You have found a new endangered species, <strong>4 mins ago</strong></h3>
+							<div class="image">
+								<%= image_tag("panda.png", :alt => "Panda") %>
+							</div>
+							<div class="information">
+								<p class="kind">Giant Pandas</p>
+								<p class="learn">learn more at eol.org</p>
+							</div>
+						</li>
+						<li>
+							<h3 class="green">You have found a new endangered species, <strong>4 mins ago</strong></h3>
+							<div class="image">
+								<%= image_tag("panda.png", :alt => "Panda") %>
+							</div>
+							<div class="information">
+								<p class="kind">Giant Pandas</p>
+								<p class="learn">learn more at eol.org</p>
+							</div>
+						</li>
+						<li>
+							<h3>You have found a new endangered species, <strong>4 mins ago</strong></h3>
+							<div class="image">
+								<%= image_tag("panda.png", :alt => "Panda") %>
+							</div>
+							<div class="information">
+								<p class="kind">Giant Pandas</p>
+								<p class="learn">learn more at eol.org</p>
+							</div>
+						</li>
+						<li>
+							<h3>You have found a new endangered species, <strong>4 mins ago</strong></h3>
+							<div class="image">
+								<%= image_tag("panda.png", :alt => "Panda") %>
+							</div>
+							<div class="information">
+								<p class="kind">Giant Pandas</p>
+								<p class="learn">learn more at eol.org</p>
+							</div>
+						</li>
+						<li class="last">
+							<h3>You have found a new endangered species, <strong>4 mins ago</strong></h3>
+							<div class="image">
+								<%= image_tag("panda.png", :alt => "Panda") %>
+							</div>
+							<div class="information">
+								<p class="kind">Giant Pandas</p>
+								<p class="learn">learn more at eol.org</p>
+							</div>
+						</li>
+					</ul>
+				</div>
 			</div>
 			
 			
 			<div id="map_canvas"></div>
+			<div id="mamufas"></div>
+			<div id="loader">
+				<%= image_tag('ajax-loader.gif', :alt =>'loader') %>
+			</div>
 		</div>
 			
 

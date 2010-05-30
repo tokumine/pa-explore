@@ -46,6 +46,7 @@ div.profile div.header {position:relative; width:100%; height:94px; border-botto
 div.profile div.header ul {position:absolute; width:450px; bottom:-1px; left:15px; color:white; list-style:none; height:36px;}
 div.profile div.header ul li {float:left; width:auto; bottom:-1px; left:15px; list-style:none; padding:8px 25px; font:normal 15px Arial; color:#7B7B7B; text-shadow: #000000 0 1px 2px;
 	background:#1A1A1A; border:1px solid #2D2D2D; border-bottom:none; height:18px;}
+div.profile div.header ul li:hover {cursor:pointer;}
 div.profile div.header ul li.selected {color:white; text-shadow: none; background:#232323; border:1px solid #444444; border-bottom:none; height:19px;}
 
 div.profile div.feed_container {float:left; width:755px; height:576px; padding:10px 25px;}
