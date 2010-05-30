@@ -1,8 +1,7 @@
 class Classification < ActiveRecord::Base
   belongs_to :track
   belongs_to :cell
-  attr_accessible :x, :y, :z, :value, :track, :cell
-  acts_as_list :scope => :track
+  attr_accessible :x, :y, :z, :value, :track, :cell, :position
   after_update :update_stats
     
   def validate_on_update

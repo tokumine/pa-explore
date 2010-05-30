@@ -1,6 +1,6 @@
 class Track < ActiveRecord::Base
   belongs_to :user
-  has_many :classifications, :order => "position"
+  has_many :classifications
   has_many :cells, :through => :classifications
   attr_accessible :started_at, :finished_at, :user
   after_create :generate_track
@@ -22,8 +22,10 @@ class Track < ActiveRecord::Base
     x = 63520
     y = 51220
     
-    explorer = Explorer.new self, :x => x, :y => y, :z => 17
-    explorer.explore!                    
+    Track.transaction do
+      explorer = Explorer.new self, :x => x, :y => y, :z => 17    
+      explorer.explore!                    
+    end  
   end
   
   def game_json    
