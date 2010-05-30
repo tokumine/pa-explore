@@ -43,8 +43,13 @@ class Explorer
   # if cell with nothing, go there first.
   #
   def move
+    #Choose a random cell
     cell = [[@x+1, @y],[@x-1, @y],[@x, @y+1],[@x, @y+1]].rand
-    if !@path.include? cell
+    
+    #If the cell is in path, or if cell touches path, no move.
+    must_not_be_in_path_cells = [[cell[0]+1,cell[1]], [cell[0]-1,cell[1]], [cell[0],cell[1]+1], [cell[0],cell[1]-1], cell]
+        
+    if (@path - must_not_be_in_path_cells).empty?
       @path << cell
       @x = cell[0]
       @y = cell[1]
