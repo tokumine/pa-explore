@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100526140859) do
+ActiveRecord::Schema.define(:version => 20100530164850) do
 
   create_table "cells", :force => true do |t|
     t.integer  "positive_count", :default => 0
@@ -85,5 +85,7 @@ ActiveRecord::Schema.define(:version => 20100526140859) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "users", ["rank"], :name => "index_users_on_rank"
 
 end

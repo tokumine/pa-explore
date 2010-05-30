@@ -2,7 +2,10 @@ class Cell < ActiveRecord::Base
   has_many :classifications
   has_many :tracks, :through => :classifications
   attr_accessible :positive_count, :negative_count, :x, :y, :z, :parent_x, :parent_y, :parent_z
-  validates_presence_of [:x,:y,:z]
+  validates_presence_of 
+  index [:x,:y,:z]
+  index [:parent_x,:parent_y,:parent_z]
+  
   before_create :populate_parent
   
   def populate_parent
