@@ -116,11 +116,13 @@ var profile_visible = false;
 	}
 
 	function getGameRank() {
+		
 		$.ajax({
 		   type: "GET",
 		   url: "users/rank",
-		   success: function(result) {	
-
+		   success: function(result) {
+					alert('asdf');
+					$('ul#main_list').html('');
 					findYou = false;
 					for (var i=0; i<result.length; i++) {
 						if (!result[i].current_user) {
@@ -177,11 +179,15 @@ var profile_visible = false;
 	}
 
 
+	function showLoading(){	
+		$('#loader').fadeIn('slow',function(ev){
+			$('#mamufas').fadeIn('fast');
+		});
+	}
+
+
 	function removePreviousSelected() {
 		$('div.header ul li').each( function(index){
 			$(this).removeClass('selected');
 		});
 	}
-
-
-

@@ -208,21 +208,59 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 												   					};
 												   	map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
 
-
 													 	map.setCenter(start_latlng);
-											    	hideLoading();
-
 														infowindow = new InfoWindow(start_latlng, map, trackData);
 
 
 													 	setTimeout('map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)))',1000);
 													 	setTimeout('map.overlayMapTypes.insertAt(0, new FillMap(new google.maps.Size(256, 256)))',1000);
+													
+														hideLoading();
 													}
 					   }
 					 });
 		   }
 		 });
 	}
+	
+	
+
+ function getNewTrack() {
+		infowindow.setMap(null);
+		showLoading();
+
+		$.ajax({
+		   type: "POST",
+		   url: "/tracks",
+		   success: function(result){
+					projection = new MercatorProjection();
+				 	trackData = result;
+					start_latlng = getCellCenter(trackData[0].x, trackData[0].y, 17);
+
+
+					 meters = globalMaptile.LatLonToMeters(start_latlng.lat(),start_latlng.lng());
+					 pixels = globalMaptile.MetersToPixels(meters[0],meters[1],17);
+
+					$.ajax({
+					   type: "GET",
+						 dataType: 'jsonp',
+					   url: 'http://khm0.google.com/mz?x='+trackData[0].x+'&y='+trackData[0].y+'&z=17&v=62',
+					   success: function(result){
+													console.log(result.zoom);
+													if (parseInt(result.zoom)<15) {
+														getNewTrack();
+													} else {
+													 	map.setCenter(start_latlng);
+														infowindow = new InfoWindow(start_latlng, map, trackData);
+
+														hideLoading();
+													}
+					   }
+					 });
+		   }
+		 });
+	}	
+	
 	
 	
 	function FillMap(tileSize) {

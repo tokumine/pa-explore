@@ -247,12 +247,13 @@ InfoWindow.prototype.moveInfoWindow = function(choice) {
 	if (this.position == this.max_position) {
 		this.max_position = this.max_position + 1;
 	}
-	this.sendChoice(choice,this.track[this.position].id);
 
 	if (this.position==this.track_length) {
-		alert('You have finished the game!!');
+		getGameRank();
+		getNewTrack();
 		return;
 	} else {
+		this.sendChoice(choice,this.track[this.position].id);
 		this.position = this.position + 1;
 	}
 	this.latlng_ = this.getCoords();
