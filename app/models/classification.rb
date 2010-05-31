@@ -11,7 +11,8 @@ class Classification < ActiveRecord::Base
   end
     
   def update_stats
-    if self.position == (APP_CONFIG[:cells_per_track] - 1)
+    Rails.logger.debug "Classification position: #{self.position}"
+    if self.position == APP_CONFIG[:cells_per_track]      
       self.track.user.refresh_stats      
       self.track.update_attribute :finished_at, Time.now
     end  

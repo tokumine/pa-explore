@@ -31,7 +31,7 @@ class Explorer
   
 
   def explore!
-    return if @distance == 0    
+    return if @distance <= 1    
     survey if move
     explore!
   end
@@ -54,12 +54,12 @@ class Explorer
   #
   def move
     # Choose a random cell
-    # JAVI: Extend this part of the method to chose cell with lower number of surveys (on average)
+    # JAVI: Extend this part of the method to choose cell with lower number of surveys (on average)
     cell = cells_around(@loc).rand
       
     # possibly a good location
     # first look ahead      
-    if touches_path? cell, @path, @loc      
+    if !touches_path? cell, @path, @loc      
       
       # do 1 more look ahead for each further possible step to avoid this:
       #
@@ -94,11 +94,7 @@ class Explorer
         end
       end          
     end  
-    
-    Rails.logger.debug "*****************"
-    Rails.logger.debug "Location: #{@loc.to_s}, New move: #{cell.to_s}."
-    Rails.logger.debug "Path: #{@path.to_s}"    
-    
+      
     false      
     #cells = Cell.all :conditions => "(x = #{@x-1} AND y = #{@y}) OR (x = #{@x+1} AND y = #{@y}) OR (x = #{@x} AND y = #{@y-1}) OR (x = #{@x} AND y = #{@y+1})",
     #                 :order => "positive_count + negative_count ASC"
@@ -148,6 +144,6 @@ class Explorer
   # And also helps to generates straighish tracks  
   def touches_path? cell, path, parent
     cell_touch = cells_around(cell, :include_self => true) - [parent]
-    (cell_touch - @path) == cell_touch ? true : false
+    (cell_touch - path) == cell_touch ? false : true
   end  
 end
