@@ -6,7 +6,7 @@ var trackData = [];
 var stripes1;
 var stripes2;
 var stripes3;
-
+var globalMaptile = new GlobalMercator();
 
 
 
@@ -127,7 +127,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 	      cross.lineTo((cellsSize*j)+10, cellsSize*i);
 	    }
 
-			cross.moveTo(256, (cellsSize*i));
+		 cross.moveTo(256, (cellsSize*i));
      cross.lineTo(246,(cellsSize*i));
 
 
@@ -139,7 +139,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 	      cross.lineTo(cellsSize*i,(cellsSize*j)+10);
 	    }
 
-			cross.moveTo((cellsSize*i), 256);
+		 cross.moveTo((cellsSize*i), 256);
      cross.lineTo((cellsSize*i), 246);
 
 
@@ -150,68 +150,6 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 
    return canvas;
  };
-
-
- function getTileByLatLng(latlng) {
-   var worldCoordinate = projection.fromLatLngToPoint(latlng);
-   var pixelCoordinate = new google.maps.Point(worldCoordinate.x * Math.pow(2, map.getZoom()), worldCoordinate.y * Math.pow(2, map.getZoom()));
-   var tileCoordinate = new google.maps.Point(Math.floor(pixelCoordinate.x / MERCATOR_RANGE), Math.floor(pixelCoordinate.y / MERCATOR_RANGE));
-
-   var tileCoordStr = "Tile Coordinate: " + tileCoordinate.x + " , " + tileCoordinate.y + " at Zoom Level: " + map.getZoom();
-   console.log(tileCoordStr);
- }
-
- function getCellByLatLng(latlng) {
-   var worldCoordinate = projection.fromLatLngToPoint(latlng);
-   var pixelCoordinate = new google.maps.Point(worldCoordinate.x * Math.pow(2, 17), worldCoordinate.y * Math.pow(2, 17));
-   var tileCoordinate = new google.maps.Point(Math.floor(pixelCoordinate.x / MERCATOR_RANGE), Math.floor(pixelCoordinate.y / MERCATOR_RANGE));
-
-   var tileCoordStr = "Cell Coordinate: " + tileCoordinate.x + " , " + tileCoordinate.y + " at Zoom Level: 17";
-   console.log(tileCoordStr) 
- }
-
- function getCellLatLngCenter(z,x,y) {
-     //calculate the bounds of the cell
-     var bounds = getTileBounds(z,x,y);
-         
-    return bounds.getCenter();
- }
- 
- //getTileBounds(17,63517,51217)
- function getTileBounds(z,x,y) {
-    
-    var foo = pixelsToMeters(x*256,y*256,z);
- 	var maxx =foo.x;
- 	var miny =foo.y;
-
-    foo = pixelsToMeters((x+1)*256,(y+1)*256,z);
- 	var minx =foo.x;
- 	var maxy =foo.y;
- 	
-    var sw = metersToLatLon(miny,minx);
-    var ne = metersToLatLon(maxy,maxx);
- 	
- 	var latLngBounds = new google.maps.LatLngBounds(sw,ne);
- 	
-    return latLngBounds;	
- }
-
- function pixelsToMeters(x,y,z) {
-     var originShift = 2 * Math.PI * 6378137 / 2.0;
-     var res = (2 * Math.PI * 6378137) / (256 * Math.pow(2,z));
- 	 var mx = x * res - originShift;
- 	 var my = -(y * res - originShift);   
-     return {x:mx,y:my};
- }
- 
- function metersToLatLon(x, y) {
-     
-	lon = (x / (2 * Math.PI * 6378137 / 2.0)) * 180.0;
-	lat = (y / (2 * Math.PI * 6378137 / 2.0)) * 180.0;
-
-	lat = 180 / Math.PI * (2 * Math.atan( Math.exp( lat * Math.PI / 180.0)) - Math.PI / 2.0);
-	return new google.maps.LatLng(lat,lon);  
- }
 
 
 
@@ -243,35 +181,24 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
    google.maps.event.addListener(map, "zoom_changed", function() {
        map.setZoom(15);
    });
-
+/*
    google.maps.event.addListener(map, "click", function(event) {
        console.log(event.latLng);
  			 getTileByLatLng(event.latLng);
        getCellByLatLng(event.latLng);
 			
    });
-
+*/
 	$.ajax({
 	   type: "POST",
 	   url: "/tracks",
 	   success: function(result){
-				var globalMaptile = new GlobalMercator();
 			 	trackData = result;
-				console.log(trackData);
-				var obj = globalMaptile.TileLatLonBounds(trackData[0].x,(Math.pow(2,17)-trackData[0].y),17);
-				var latlngbounds = new google.maps.LatLngBounds();
-				latlngbounds.extend(new google.maps.LatLng(obj[0],obj[1]));
-				latlngbounds.extend(new google.maps.LatLng(obj[2],obj[3]));
-				
-			 	map.setCenter(latlngbounds.getCenter());
+				var start_point = getCellCenter(trackData[0].x, trackData[0].y, 17);
+			 	map.setCenter(start_point);
 	    	hideLoading();
-				//infowindow = new InfoWindow(latlngbounds.getCenter(), map, trackData);
+				// infowindow = new InfoWindow(start_point, map, trackData);
 
-				var marker = new google.maps.Marker({
-				        position: latlngbounds.getCenter(), 
-				        map: map,
-				        title:"Hello World!"
-				    });
 				
 			 	setTimeout('map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)))',1000);
 			 	setTimeout('map.overlayMapTypes.insertAt(0, new FillMap(new google.maps.Size(256, 256)))',1000);
@@ -316,10 +243,9 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 					stripes3 = new Image();
 				  stripes3.src = "images/stripes_3.png";
 				
-					var x_coord = Math.ceil(coord.x*4);
-					var y_coord = Math.ceil(coord.y*4);
-					// alert(x_coord);
-					// alert(y_coord);
+					var x_coord = Math.floor(coord.x*4);
+					var y_coord = Math.floor(coord.y*4);
+					//console.log(x_coord + '----' + y_coord);
 				
 				  stripes3.onload = function() {
 						var x=0;
@@ -360,4 +286,18 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 		}
 		return stripes1;
 	}
+	
+	
+	function getCellCenter(x,y,zoom) {
+		var google_tiles = globalMaptile.GoogleTile(x, y, 17);
+		var obj = globalMaptile.TileLatLonBounds(google_tiles[0],google_tiles[1],17);
+		var latlngbounds = new google.maps.LatLngBounds();
+		
+		latlngbounds.extend(new google.maps.LatLng(obj[0],obj[1]));
+		latlngbounds.extend(new google.maps.LatLng(obj[2],obj[3]));
+		
+		return latlngbounds.getCenter();
+		
+	}
+	
 

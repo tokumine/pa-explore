@@ -105,7 +105,11 @@ GlobalMercator = function()
 		
 		return [min[0], min[1], max[0], max[1]];
 	}
-	
+
+	this.GoogleTile= function(tx, ty, zoom){
+		return [tx, (Math.pow(2,zoom) - 1) - ty];
+	}
+	       	
 	//Returns bounds of the given tile in latutude/longitude using WGS84 datum
 	this.TileLatLonBounds = function(tx, ty, zoom)
 	{

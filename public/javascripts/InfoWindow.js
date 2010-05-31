@@ -5,9 +5,10 @@ InfoWindow.prototype = new google.maps.OverlayView();
 
 function InfoWindow(latlng, map, track) {
 	
-	this.position = 1;
+	this.position = 0;
 	this.track_length = track.length;
-	this.max_position = 1;
+	this.max_position = 0;
+	this.track = track;
 	
   this.latlng_ = latlng;
   this.map_ = map;
@@ -261,12 +262,18 @@ InfoWindow.prototype.moveInfoWindow = function() {
 	//change the step and move infowindow
 	$(this.div_).children('div').children('p.current_step').text(this.position);
 	this.latlng_ = this.getCoords();
+	var pixPosition = this.getProjection().fromLatLngToDivPixel(this.latlng_);
+  if (!pixPosition) return;
+
+  this.div_.style.left = (pixPosition.x - 126) + "px";
+  this.div_.style.top = (pixPosition.y - 85) + "px";
+
+	this.map_.setCenter(this.latlng_);
 	
 }
 
 
 InfoWindow.prototype.getCoords = function() {
-	console.log(this.latlng_);
- 	return new google.maps.LatLng(this.latlng_.lat()-0.5,this.latlng_.lng()-0.5);
+	return getCellCenter(this.track[this.position].x,this.track[this.position].y,this.track[].zoom);
 }
 
