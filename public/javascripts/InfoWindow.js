@@ -5,9 +5,9 @@ InfoWindow.prototype = new google.maps.OverlayView();
 
 function InfoWindow(latlng, map, track) {
 	
-	this.position = 0;
+	this.position = 1;
 	this.track_length = track.length;
-	this.max_position = 0;
+	this.max_position = 1;
 	this.track = track;
 	
   this.latlng_ = latlng;
@@ -112,9 +112,6 @@ InfoWindow.prototype.onAdd = function() {
 	},function(ev){
 	   $(this).css('background-position','0px 0px');
 	});
-	
-
-	
 	div_content.appendChild(arrow_down);
 	
 	var image_static_layer = document.createElement('img');
@@ -193,7 +190,7 @@ InfoWindow.prototype.onAdd = function() {
 	});
 	
 	$(yes).click(function(ev){
-		me.moveInfoWindow();
+		me.moveInfoWindow(true);
 	});	
 	
 	
@@ -216,7 +213,7 @@ InfoWindow.prototype.onAdd = function() {
 	});
 
 	$(no).click(function(ev){
-		me.moveInfoWindow();
+		me.moveInfoWindow(false);
 	});
 
   this.div_ = div;
@@ -245,35 +242,39 @@ InfoWindow.prototype.getStaticImage = function() {
 
 
 
-InfoWindow.prototype.moveInfoWindow = function() {
+InfoWindow.prototype.moveInfoWindow = function(choice) {
 	//execute request yes/no TODO
 	//change the max position if it needs
 	if (this.position == this.max_position) {
 		this.max_position = this.max_position + 1;
 	}
-	
+	this.sendChoice(choice,this.track[this.position].id);
+	alert(this.track[this.position].id);
 	if (this.position==this.track_length) {
 		alert('You have finished the game!!');
 		return;
 	} else {
 		this.position = this.position + 1;
 	}
-	
-	//change the step and move infowindow
-	$(this.div_).children('div').children('p.current_step').text(this.position);
 	this.latlng_ = this.getCoords();
-	var pixPosition = this.getProjection().fromLatLngToDivPixel(this.latlng_);
-  if (!pixPosition) return;
-
-  this.div_.style.left = (pixPosition.x - 126) + "px";
-  this.div_.style.top = (pixPosition.y - 85) + "px";
+	$(this.div_).children('div').children('p.current_step').text(this.position);
+	$(this.div_).children('img').attr('src',this.getStaticImage());
+	this.draw();
 
 	this.map_.setCenter(this.latlng_);
 	
 }
 
+InfoWindow.prototype.sendChoice = function(choice,id) {
+	$.ajax({
+	   type: "POST",
+	   url: "/classifications/"+id,
+		 data: {value : id, method: 'put'},
+	 });
+}
 
 InfoWindow.prototype.getCoords = function() {
-	return getCellCenter(this.track[this.position].x,this.track[this.position].y,this.track[].zoom);
+	return getCellCenter(this.track[this.position-1].x,this.track[this.position-1].y,this.track[this.position-1].zoom);
 }
+
 
