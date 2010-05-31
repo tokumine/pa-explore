@@ -249,11 +249,12 @@ InfoWindow.prototype.moveInfoWindow = function(choice) {
 	}
 
 	if (this.position==this.track_length) {
+		this.sendChoice(choice,this.track[this.position-1].id);
 		getGameRank();
 		getNewTrack();
 		return;
 	} else {
-		this.sendChoice(choice,this.track[this.position].id);
+		this.sendChoice(choice,this.track[this.position-1].id);
 		this.position = this.position + 1;
 	}
 	this.latlng_ = this.getCoords();

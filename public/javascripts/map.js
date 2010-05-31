@@ -228,7 +228,6 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
  function getNewTrack() {
 		infowindow.setMap(null);
 		showLoading();
-
 		$.ajax({
 		   type: "POST",
 		   url: "/tracks",
