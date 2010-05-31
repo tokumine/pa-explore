@@ -184,7 +184,6 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 				 	trackData = result;
 					start_latlng = getCellCenter(trackData[0].x, trackData[0].y, 17);
 
-
 					 meters = globalMaptile.LatLonToMeters(start_latlng.lat(),start_latlng.lng());
 					 pixels = globalMaptile.MetersToPixels(meters[0],meters[1],17);
 
@@ -199,16 +198,23 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 													} else {
 													   var mapOptions = {
 												     zoom: 15,
+														 scrollwheel: false,
 												     center: start_latlng,
 												     mapTypeId: google.maps.MapTypeId.SATELLITE,
 												     mapTypeControl: false,
 												     navigationControl: false,
 												     scaleControl: false,
-												   	disableDoubleClickZoom: true
+												   	 disableDoubleClickZoom: true
 												   					};
 												   	map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
 
 													 	map.setCenter(start_latlng);
+													  google.maps.event.addListener(map, 'zoom_changed', function() {
+													    map.setZoom(15);
+													  });
+													
+													
+													
 														infowindow = new InfoWindow(start_latlng, map, trackData);
 
 
