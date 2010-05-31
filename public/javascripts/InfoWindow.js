@@ -243,13 +243,11 @@ InfoWindow.prototype.getStaticImage = function() {
 
 
 InfoWindow.prototype.moveInfoWindow = function(choice) {
-	//execute request yes/no TODO
-	//change the max position if it needs
+
 	if (this.position == this.max_position) {
 		this.max_position = this.max_position + 1;
 	}
 	this.sendChoice(choice,this.track[this.position].id);
-	alert(this.track[this.position].id);
 	if (this.position==this.track_length) {
 		alert('You have finished the game!!');
 		return;
