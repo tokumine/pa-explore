@@ -2,7 +2,7 @@
 
 $(document).ready(function() {
 	
-	alert('asdf');
+//	alert('asdf');
 		
 });
 
