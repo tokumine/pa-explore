@@ -197,8 +197,9 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 				var start_point = getCellCenter(trackData[0].x, trackData[0].y, 17);
 			 	map.setCenter(start_point);
 	    	hideLoading();
+
 				console.log(trackData);
-				// infowindow = new InfoWindow(start_point, map, trackData);
+				infowindow = new InfoWindow(start_point, map, trackData);
 
 				
 			 	setTimeout('map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)))',1000);
