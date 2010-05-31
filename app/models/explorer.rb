@@ -94,6 +94,10 @@ class Explorer
         end
       end          
     end  
+    
+    Rails.logger.debug "*****************"
+     Rails.logger.debug "Location: #{@loc.to_s}, New move: #{cell.to_s}."
+     Rails.logger.debug "Path: #{@path.to_s}"  
       
     false      
     #cells = Cell.all :conditions => "(x = #{@x-1} AND y = #{@y}) OR (x = #{@x+1} AND y = #{@y}) OR (x = #{@x} AND y = #{@y-1}) OR (x = #{@x} AND y = #{@y+1})",
