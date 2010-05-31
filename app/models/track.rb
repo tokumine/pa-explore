@@ -17,14 +17,14 @@ class Track < ActiveRecord::Base
   def generate_track (x=nil, y=nil)    
 
     # Can set starting location by passing {:x => x, :y => y, :z => z} hash
-    #x = (63520..63600).to_a.rand
-    #y = (51220..51300).to_a.rand
+    x = (63520..63700).to_a.rand
+    y = (51220..51400).to_a.rand
     #x = 63520
     #y = 51220
     
     Track.transaction do
-      #explorer = Explorer.new self, :x => x, :y => y, :z => 17    
-      explorer = Explorer.new self
+      explorer = Explorer.new self, :x => x, :y => y, :z => 17    
+      #explorer = Explorer.new self
       explorer.explore!                    
     end  
   end
