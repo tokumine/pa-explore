@@ -191,7 +191,7 @@ InfoWindow.prototype.onAdd = function() {
 	
 	$(yes).click(function(ev){
 		me.moveInfoWindow(true);
-	});	
+	});
 	
 	
   var no = document.createElement('a');
@@ -215,6 +215,10 @@ InfoWindow.prototype.onAdd = function() {
 	$(no).click(function(ev){
 		me.moveInfoWindow(false);
 	});
+
+
+	this.addOnKeyPress();
+
 
   this.div_ = div;
 
@@ -252,6 +256,7 @@ InfoWindow.prototype.moveInfoWindow = function(choice) {
 		this.sendChoice(choice,this.track[this.position-1].id);
 		getGameRank();
 		getNewTrack();
+		this.removeOnKeyPress();
 		return;
 	} else {
 		this.sendChoice(choice,this.track[this.position-1].id);
@@ -278,4 +283,22 @@ InfoWindow.prototype.getCoords = function() {
 	return getCellCenter(this.track[this.position-1].x,this.track[this.position-1].y,this.track[this.position-1].zoom);
 }
 
+InfoWindow.prototype.addOnKeyPress = function() {
+	var me = this;
+	$(document).keypress(function (e) {
+			if ( e.keyCode == 110 ){
+				showResponse('N');
+	       me.moveInfoWindow(false);
+	    } else {
+				if (e.keyCode == 121) {
+					showResponse('Y');
+					me.moveInfoWindow(true);
+				}
+			}
+	});
+}
+
+InfoWindow.prototype.removeOnKeyPress = function() {
+	$(document).unbind('keypress');
+}
 

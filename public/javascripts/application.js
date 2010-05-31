@@ -2,7 +2,7 @@ var findYou = false;
 var profile_visible = false;
 
 	$(document).ready(function() {
-	
+
 		calculateCentre('div#loader','div#mamufas',218);
 		$('#loader').fadeIn('slow');
 		
@@ -103,7 +103,6 @@ var profile_visible = false;
 		$('div.feed_container').css('width',window.innerWidth-270);
 		$('div.feed_container').css('height',window.innerHeight-110);
 		
-		
 		calculateCentre('div#loader','div#mamufas',218);
 	}
 
@@ -185,8 +184,20 @@ var profile_visible = false;
 	}
 
 
+	function showResponse(str){
+		$('#response').text(str);
+		$('#response').stop(true,true).fadeIn('fast',function(ev){
+			$('#response').delay(2000).fadeOut('slow');
+		});
+	}
+
+
 	function removePreviousSelected() {
 		$('div.header ul li').each( function(index){
 			$(this).removeClass('selected');
 		});
 	}
+
+	
+	
+	
