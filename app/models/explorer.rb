@@ -7,6 +7,10 @@ class Explorer
     property :x
     property :y
     property :z, :default => 17
+    
+    def to_s
+      "[#{x},#{y}]"
+    end
   end
     
   def initialize track, opts = {}
@@ -52,18 +56,49 @@ class Explorer
     # Choose a random cell
     # JAVI: Extend this part of the method to chose cell with lower number of surveys (on average)
     cell = cells_around(@loc).rand
-    
-    # If new cell is in path, or if touches path aside from current cell, no move.
-    # This prevents the explorer from getting in to a dead end
-    # And also helps to generates straighish tracks
-    bad_path = cells_around(cell, :include_self => true) - [@loc] #<-- it's ok to touch current cell      
-        
-    if (bad_path - @path) == bad_path
-      @path << cell
-      @loc = cell
-      @distance -= 1
-      return true      
+      
+    # possibly a good location
+    # first look ahead      
+    if touches_path? cell, @path, @loc      
+      
+      # do 1 more look ahead for each further possible step to avoid this:
+      #
+      # . . . . .
+      # v < < . .
+      # v . ^ . .
+      # v . ^ < .
+      # v . x o .
+      # v x ? x .
+      # > > ^ . .
+      # . . . . . 
+      #
+      # ^v<>  = path
+      # o     = start
+      # ?     = possible good looking next move
+      # x     = shows that this is a dead end. All further steps are not allowed.
+      #
+      # Therefore, if any further step from cell is possible, then we're good to go
+      
+      # Configure future
+      future_path = @path.dup
+      future_path << cell
+      second_steps = cells_around(cell)
+      
+      # If at least one of the future steps is valid, go for it
+      second_steps.each do |ss|
+        if !touches_path? ss, future_path, cell
+          @path << cell
+          @loc = cell
+          @distance -= 1      
+          return true
+        end
+      end          
     end  
+    
+    Rails.logger.debug "*****************"
+    Rails.logger.debug "Location: #{@loc.to_s}, New move: #{cell.to_s}."
+    Rails.logger.debug "Path: #{@path.to_s}"    
+    
     false      
     #cells = Cell.all :conditions => "(x = #{@x-1} AND y = #{@y}) OR (x = #{@x+1} AND y = #{@y}) OR (x = #{@x} AND y = #{@y-1}) OR (x = #{@x} AND y = #{@y+1})",
     #                 :order => "positive_count + negative_count ASC"
@@ -101,8 +136,18 @@ class Explorer
           Loc.new(:x => cell.x, :y => cell.y-1)]
     
     # add self if requested
-    ca << cell if opts[:include_self]
-        
+    ca << cell if opts[:include_self]        
     ca
+  end  
+  
+  # Tests if any possible cells around a cell touch or are in the current path
+  # the parent is where the cell came from, it's ok to touch that
+  #
+  # If new cell is in path, or if touches path aside from current cell, no move.
+  # This prevents the explorer from getting in to a dead end
+  # And also helps to generates straighish tracks  
+  def touches_path? cell, path, parent
+    cell_touch = cells_around(cell, :include_self => true) - [parent]
+    (cell_touch - @path) == cell_touch ? true : false
   end  
 end
