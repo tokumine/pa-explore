@@ -7,7 +7,7 @@ var stripes1;
 var stripes2;
 var stripes3;
 var globalMaptile = new GlobalMercator();
-
+var start_latlng;
 
 
  function bound(value, opt_min, opt_max) {
@@ -31,6 +31,17 @@ function MercatorProjection() {
   this.pixelsPerLonDegree_ = MERCATOR_RANGE / 360;
   this.pixelsPerLonRadian_ = MERCATOR_RANGE / (2 * Math.PI);
 };
+
+function getTileByLatLng(latlng) {
+  var worldCoordinate = projection.fromLatLngToPoint(latlng);
+  var pixelCoordinate = new google.maps.Point(worldCoordinate.x * Math.pow(2, map.getZoom()), worldCoordinate.y * Math.pow(2, map.getZoom()));
+  var tileCoordinate = new google.maps.Point(Math.floor(pixelCoordinate.x / MERCATOR_RANGE), Math.floor(pixelCoordinate.y / MERCATOR_RANGE));
+
+  var tileCoordStr = "Tile Coordinate: " + tileCoordinate.x + " , " + tileCoordinate.y + " at Zoom Level: " + map.getZoom();
+  console.log(tileCoordStr);
+}
+
+
 
 MercatorProjection.prototype.fromLatLngToPoint = function(latLng, opt_point) {
   var me = this;
@@ -163,49 +174,54 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 	}
 
 
+
 	function initialize() {
-	  var myLatlng = new google.maps.LatLng(36.552570002015074, -5.535725346112064);
-
-   var mapOptions = {
-     zoom: 15,
-     center: myLatlng,
-     mapTypeId: google.maps.MapTypeId.SATELLITE,
-     mapTypeControl: false,
-     navigationControl: false,
-     scaleControl: false
-   };
-   map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
-   projection = new MercatorProjection();
+		$.ajax({
+		   type: "POST",
+		   url: "/tracks",
+		   success: function(result){
+					projection = new MercatorProjection();
+				 	trackData = result;
+					start_latlng = getCellCenter(trackData[0].x, trackData[0].y, 17);
 
 
-   google.maps.event.addListener(map, "zoom_changed", function() {
-       map.setZoom(15);
-   });
-/*
-   google.maps.event.addListener(map, "click", function(event) {
-       console.log(event.latLng);
- 			 getTileByLatLng(event.latLng);
-       getCellByLatLng(event.latLng);
-			
-   });
-*/
-	$.ajax({
-	   type: "POST",
-	   url: "/tracks",
-	   success: function(result){
-			 	trackData = result;
-				var start_point = getCellCenter(trackData[0].x, trackData[0].y, 17);
-			 	map.setCenter(start_point);
-	    	hideLoading();
+					 meters = globalMaptile.LatLonToMeters(start_latlng.lat(),start_latlng.lng());
+					 pixels = globalMaptile.MetersToPixels(meters[0],meters[1],17);
 
-				console.log(trackData);
-				infowindow = new InfoWindow(start_point, map, trackData);
+					$.ajax({
+					   type: "GET",
+						 dataType: 'jsonp',
+					   url: 'http://khm0.google.com/mz?x='+trackData[0].x+'&y='+trackData[0].y+'&z=17&v=62',
+					   success: function(result){
+													console.log(result.zoom);
+													if (parseInt(result.zoom)<15) {
+														initialize();
+													} else {
+													   var mapOptions = {
+												     zoom: 15,
+												     center: start_latlng,
+												     mapTypeId: google.maps.MapTypeId.SATELLITE,
+												     mapTypeControl: false,
+												     navigationControl: false,
+												     scaleControl: false,
+												   	disableDoubleClickZoom: true
+												   					};
+												   	map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
 
-				
-			 	setTimeout('map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)))',1000);
-			 	setTimeout('map.overlayMapTypes.insertAt(0, new FillMap(new google.maps.Size(256, 256)))',1000);
-	   }
-	 });
+
+													 	map.setCenter(start_latlng);
+											    	hideLoading();
+
+														infowindow = new InfoWindow(start_latlng, map, trackData);
+
+
+													 	setTimeout('map.overlayMapTypes.insertAt(0, new CoordMapType(new google.maps.Size(256, 256)))',1000);
+													 	setTimeout('map.overlayMapTypes.insertAt(0, new FillMap(new google.maps.Size(256, 256)))',1000);
+													}
+					   }
+					 });
+		   }
+		 });
 	}
 	
 	
