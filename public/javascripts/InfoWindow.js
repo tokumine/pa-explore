@@ -248,6 +248,7 @@ InfoWindow.prototype.moveInfoWindow = function(choice) {
 		this.max_position = this.max_position + 1;
 	}
 	this.sendChoice(choice,this.track[this.position].id);
+
 	if (this.position==this.track_length) {
 		alert('You have finished the game!!');
 		return;
@@ -267,7 +268,7 @@ InfoWindow.prototype.sendChoice = function(choice,id) {
 	$.ajax({
 	   type: "POST",
 	   url: "/classifications/"+id,
-		 data: {value : id, method: 'put'},
+		 data: {value : id, _method: 'put'},
 	 });
 }
 

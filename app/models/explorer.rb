@@ -22,6 +22,7 @@ class Explorer
     @path         = []    
     @track        = track
     survey    
+    @path << @loc
   end
   
 
