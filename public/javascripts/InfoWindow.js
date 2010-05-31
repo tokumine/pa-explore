@@ -237,7 +237,7 @@ InfoWindow.prototype.onRemove = function() {
 }
 
 InfoWindow.prototype.getStaticImage = function() {
-	return 'http://maps.google.com/staticmap?center='+this.latlng_.b+','+this.latlng_.c+'&zoom=15&size=150x150&sensor=false&key=ABQIAAAAsIunaSEq-72JsQD5i92_2RSBAjOOhu3AGseSip9oOKv69lUsGxQJJZ1BfzmSIDX0FfGUGpci0uokE&maptype=satellite';
+	return 'http://maps.google.com/staticmap?center='+this.latlng_.b+','+this.latlng_.c+'&zoom=15&size=150x150&sensor=false&key=ABQIAAAAsIunaSEq-72JsQD5i92_2RRK2aWRLaXqeYe2oYF4o2V7r6oZQRSCm3N8M38_aOayJHXgdLvyKO_EVQ&maptype=satellite';
 }
 
 
