@@ -121,7 +121,6 @@ var profile_visible = false;
 		   type: "GET",
 		   url: "users/rank",
 		   success: function(result) {
-					alert('asdf');
 					$('ul#main_list').html('');
 					findYou = false;
 					for (var i=0; i<result.length; i++) {
@@ -152,7 +151,7 @@ var profile_visible = false;
 		} else {
 			var ul_html = '';
 			for (var j=0; j<8; j++) {
-				ul_html =  '<li>'+ newNumber.substring(j,j+1) +'</li>' + ul_html;
+				ul_html = ul_html + '<li>'+ newNumber.substring(j,j+1) +'</li>' ;
 			}
 			return '<ul>' + ul_html + '</ul>';
 		}
