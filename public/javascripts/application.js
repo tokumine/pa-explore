@@ -2,7 +2,7 @@ var findYou = false;
 var profile_visible = false;
 
 	$(document).ready(function() {
-	
+
 		calculateCentre('div#loader','div#mamufas',218);
 		$('#loader').fadeIn('slow');
 		
@@ -103,7 +103,6 @@ var profile_visible = false;
 		$('div.feed_container').css('width',window.innerWidth-270);
 		$('div.feed_container').css('height',window.innerHeight-110);
 		
-		
 		calculateCentre('div#loader','div#mamufas',218);
 	}
 
@@ -121,7 +120,6 @@ var profile_visible = false;
 		   type: "GET",
 		   url: "users/rank",
 		   success: function(result) {
-					alert('asdf');
 					$('ul#main_list').html('');
 					findYou = false;
 					for (var i=0; i<result.length; i++) {
@@ -152,7 +150,7 @@ var profile_visible = false;
 		} else {
 			var ul_html = '';
 			for (var j=0; j<8; j++) {
-				ul_html =  '<li>'+ newNumber.substring(j,j+1) +'</li>' + ul_html;
+				ul_html = ul_html + '<li>'+ newNumber.substring(j,j+1) +'</li>' ;
 			}
 			return '<ul>' + ul_html + '</ul>';
 		}
@@ -186,8 +184,20 @@ var profile_visible = false;
 	}
 
 
+	function showResponse(str){
+		$('#response').text(str);
+		$('#response').stop(true,true).fadeIn('fast',function(ev){
+			$('#response').delay(2000).fadeOut('slow');
+		});
+	}
+
+
 	function removePreviousSelected() {
 		$('div.header ul li').each( function(index){
 			$(this).removeClass('selected');
 		});
 	}
+
+	
+	
+	
