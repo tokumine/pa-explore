@@ -122,7 +122,7 @@ MercatorProjection.prototype.fromPointToLatLng = function(point) {
 
     ctx.fillStyle    = 'red';
     ctx.font         = 'bold 10px sans-serif'
-   	ctx.fillText(zoom + ' / '+coord.x+ ' / '+coord.y, 10, 10);
+   	//ctx.fillText(zoom + ' / '+coord.x+ ' / '+coord.y, 10, 10);
 
 
    cross.strokeStyle = "#FFF";
