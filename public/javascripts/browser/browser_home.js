@@ -186,8 +186,8 @@ var profile_visible = false;
 
 	function showResponse(str){
 		$('#response').text(str);
-		$('#response').stop(true,true).fadeIn('fast',function(ev){
-			$('#response').delay(2000).fadeOut('slow');
+		$('#response').stop(true).fadeTo('fast',1,function(ev){
+			$('#response').delay(1000).fadeTo('fast',0);
 		});
 	}
 

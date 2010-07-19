@@ -115,13 +115,13 @@ InfoWindow.prototype.onAdd = function() {
 	div_content.appendChild(arrow_down);
 	
 	var image_static_layer = document.createElement('div');
-	image_static_layer.style.height =  '152px';
-	image_static_layer.style.width =  '152px';
-	image_static_layer.style.position = "absolute";
+	$(image_static_layer).addClass('second_map');
+	image_static_layer.style.height =  '150px';
+	image_static_layer.style.width =  '150px';
+	image_static_layer.style.position = 'relative';
 	image_static_layer.style.zIndex = "11";
-	image_static_layer.style.backgroundColor = '#333333';
 	image_static_layer.style.top = "3px";
-	image_static_layer.style.left = "53px";
+	image_static_layer.style.left = "53px";	
 	div.appendChild(image_static_layer);
 	
 	
@@ -226,14 +226,16 @@ InfoWindow.prototype.onAdd = function() {
    	scaleControl: false,
  	 	disableDoubleClickZoom: true
  	};
- 	second_map = new google.maps.Map(image_static_layer,mapOptions);
 
-
+	var me = this;
 
   this.div_ = div;
 
   var panes = this.getPanes();
   panes.overlayLayer.appendChild(this.div_);
+
+ 	second_map = new google.maps.Map(image_static_layer,mapOptions);
+
 }
 
 InfoWindow.prototype.draw = function() {
@@ -270,7 +272,9 @@ InfoWindow.prototype.moveInfoWindow = function(choice) {
 		this.position = this.position + 1;
 	}
 	this.latlng_ = this.getCoords();
-	second_map.setCenter(this.latlng_,15);
+	second_map.setCenter(this.latlng_);
+	
+	
 	$(this.div_).children('div').children('p.current_step').text(this.position);
 	this.draw();
 
